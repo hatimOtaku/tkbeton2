@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>TK Béton — L'art du béton pour vos espaces extérieurs</title>
-<meta name="description" content="TK Béton, fabricant de béton préfabriqué à Kénitra : pavés autobloquants, bordures, caniveaux et mobilier urbain, aux normes nationales et européennes.">
-<meta name="theme-color" content="#14120f">
+<title>TK Béton — Pavés, bordures, caniveaux et mobilier urbain en béton</title>
+<meta name="description" content="TK Béton, fabricant de béton préfabriqué à Kénitra depuis plus de 25 ans : pavés autobloquants, bordures, caniveaux et mobilier urbain, aux normes nationales et européennes.">
+<meta name="theme-color" content="#e8e5de">
 <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
 <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
 <script>
@@ -13,189 +13,211 @@
 (function(){try{var l=localStorage.getItem('tk-lang');if(['fr','en','ar'].indexOf(l)<0){l='fr';}
 var d=document.documentElement;d.lang=l;d.dir=l==='ar'?'rtl':'ltr';}catch(e){}})();
 </script>
-<link rel="preload" as="image" href="images/logo-light.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;600&family=Noto+Naskh+Arabic:wght@500;700&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
 <header class="site-header" id="top">
-  <a class="brand" href="#top" aria-label="TK Béton — Beton Engineering">
-    <img src="images/logo-light.png" width="323" height="145" alt="TK Béton — Beton Engineering">
-  </a>
-  <nav class="main-nav" id="main-nav" aria-label="Navigation principale">
-    <a href="#collections" data-i18n="nav.collections">Collections</a>
-    <a href="#references" data-i18n="nav.refs">Références</a>
-    <a href="#savoir-faire" data-i18n="nav.craft">Savoir-faire</a>
-    <a href="#contact" data-i18n="nav.contact">Contact</a>
+  <a class="brand" href="#top"><img src="images/logo-color.png" width="323" height="145" alt="TK Béton — Beton Engineering"></a>
+  <nav class="main-nav" id="main-nav" aria-label="Navigation">
+    <a href="#gammes"><span class="n">01</span><span data-i18n="nav.ranges">Gammes</span></a>
+    <a href="#pour-qui"><span class="n">02</span><span data-i18n="nav.clients">Pour qui</span></a>
+    <a href="#usine"><span class="n">03</span><span data-i18n="nav.factory">Usine</span></a>
+    <a href="#contact"><span class="n">04</span><span data-i18n="nav.contact">Contact</span></a>
   </nav>
   <div class="header-tools">
+    <a class="head-phone" href="tel:+212537522534" dir="ltr">05 37 52 25 34</a>
     <div class="lang" role="group" aria-label="Langue / Language / اللغة">
       <button type="button" data-lang="fr" aria-pressed="true">FR</button>
       <button type="button" data-lang="en" aria-pressed="false">EN</button>
-      <button type="button" data-lang="ar" aria-pressed="false" lang="ar">عربي</button>
+      <button type="button" data-lang="ar" aria-pressed="false" lang="ar">ع</button>
     </div>
-    <a class="btn btn-gold btn-sm" href="#contact" data-i18n="nav.quote">Demander un devis</a>
+    <a class="btn btn-ink btn-sm" href="#contact" data-i18n="nav.quote">Devis</a>
     <button class="menu-btn" type="button" aria-controls="main-nav" aria-expanded="false" aria-label="Menu"><span></span><span></span></button>
   </div>
 </header>
 
 <main>
-  <!-- HERO: the logo is the centrepiece -->
+  <!-- HERO -->
   <section class="hero" aria-labelledby="hero-title">
-    <div class="hero-bg" aria-hidden="true"></div>
-    <div class="hero-inner">
-      <img class="hero-logo" src="images/logo-light.png" width="323" height="145" alt="TK Béton — Beton Engineering" fetchpriority="high">
-      <p class="wordmark" data-i18n="brand.name">TK Béton</p>
-      <h1 id="hero-title" data-i18n="hero2.title">Le béton, élevé au rang d'art.</h1>
-      <p class="lead" data-i18n="hero.lead"></p>
-      <div class="hero-cta">
-        <a class="btn btn-gold" href="#collections" data-i18n="hero.cta1">Découvrir les collections</a>
-        <a class="btn btn-ghost" href="#contact" data-i18n="nav.quote">Demander un devis</a>
-      </div>
-    </div>
-    <a class="scroll-hint" href="#brandline" aria-label="Scroll"><i></i></a>
-  </section>
-
-  <!-- BRAND LINE -->
-  <div class="brandline" id="brandline" aria-hidden="true">
-    <div class="brandline-track">
-      <span>TK BÉTON</span><span>BETON ENGINEERING</span><span>KÉNITRA</span><span>CASABLANCA</span>
-      <span>TK BÉTON</span><span>BETON ENGINEERING</span><span>KÉNITRA</span><span>CASABLANCA</span>
-    </div>
-  </div>
-
-  <!-- TRUST -->
-  <section class="pillars" id="pillars">
-    <div class="wrap pillars-grid">
-      <div><h2 data-i18n="pillars.1.t">Plus de 25 ans</h2><p data-i18n="pillars.1.d"></p></div>
-      <div><h2 data-i18n="pillars.2.t">Normes</h2><p data-i18n="pillars.2.d"></p></div>
-      <div><h2 data-i18n="pillars.3.t">Sur mesure</h2><p data-i18n="pillars.3.d"></p></div>
-      <div><h2 data-i18n="pillars.4.t">Kénitra · Casablanca</h2><p data-i18n="pillars.4.d"></p></div>
-    </div>
-  </section>
-
-  <!-- COLLECTIONS: expanding panels -->
-  <section class="section section-dark" id="collections" aria-labelledby="col-title">
     <div class="wrap">
-      <header class="section-head">
-        <p class="eyebrow" data-i18n="col.eyebrow">Nos collections</p>
-        <h2 id="col-title" data-i18n="col.title">Quatre univers</h2>
-      </header>
-    </div>
-    <div class="panels">
-      <a class="panel" href="#contact" data-product="Pavés autobloquants">
-        <img src="images/tk_port.jpg" width="715" height="500" alt="Pavés autobloquants TK Port" loading="lazy">
-        <div class="panel-body"><h3 data-i18n="col.paves.t"></h3><p data-i18n="col.paves.d"></p><span class="more" data-i18n="card.quote">Demander un devis</span></div>
-      </a>
-      <a class="panel" href="#contact" data-product="Bordures">
-        <img src="images/p1-cr1.jpg" width="715" height="500" alt="Bordures P1-CR1" loading="lazy">
-        <div class="panel-body"><h3 data-i18n="col.bordures.t"></h3><p data-i18n="col.bordures.d"></p><span class="more" data-i18n="card.quote">Demander un devis</span></div>
-      </a>
-      <a class="panel" href="#contact" data-product="Caniveaux">
-        <img src="images/caniveaux.jpg" width="429" height="300" alt="Caniveaux en béton" loading="lazy">
-        <div class="panel-body"><h3 data-i18n="col.caniveaux.t"></h3><p data-i18n="col.caniveaux.d"></p><span class="more" data-i18n="card.quote">Demander un devis</span></div>
-      </a>
-      <a class="panel" href="#contact" data-product="Mobilier urbain">
-        <img src="images/bornes.jpg" width="715" height="500" alt="Bornes en béton" loading="lazy">
-        <div class="panel-body"><h3 data-i18n="col.mobilier.t"></h3><p data-i18n="col.mobilier.d"></p><span class="more" data-i18n="card.quote">Demander un devis</span></div>
-      </a>
+      <div class="masthead" aria-hidden="true">
+        <svg viewBox="0 0 1000 236" preserveAspectRatio="xMidYMid meet"><text x="0" y="230" textLength="1000" lengthAdjust="spacingAndGlyphs" direction="ltr">TK BÉTON</text></svg>
+      </div>
+      <div class="hazard" aria-hidden="true"></div>
+      <p class="kicker mono" data-i18n="hero.kicker">Béton préfabriqué — usine à Kénitra, siège à Casablanca</p>
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <h1 id="hero-title" data-i18n="hero.title">Pavés, bordures, caniveaux et mobilier urbain.</h1>
+          <p class="lead" data-i18n="hero.lead"></p>
+          <div class="cta-row">
+            <a class="btn btn-ink" href="#gammes"><span data-i18n="hero.cta">Voir les 15 modèles</span><span class="arrow down" aria-hidden="true">↓</span></a>
+            <a class="btn btn-line" href="tel:+212537522534" dir="ltr">05 37 52 25 34</a>
+          </div>
+        </div>
+        <figure class="fig hero-fig">
+          <img src="images/slide1.jpg" width="1920" height="700" alt="Bordure et pavés TK Béton posés en courbe" fetchpriority="high">
+          <figcaption class="mono"><span data-i18n="fig.word">Fig.</span> 01 — <span data-i18n="fig.1"></span></figcaption>
+        </figure>
+      </div>
     </div>
   </section>
 
-  <!-- BAND -->
-  <section class="band" aria-labelledby="band-title">
-    <img src="images/slide3.jpg" width="1920" height="700" alt="Mobilier urbain TK Béton : bancs et bornes en béton" loading="lazy">
-    <div class="band-shade"></div>
-    <div class="wrap band-copy">
-      <h2 id="band-title" data-i18n="band.title"></h2>
-      <p data-i18n="band.p"></p>
-      <a class="btn btn-gold" href="#contact" data-product="Mobilier urbain sur mesure" data-i18n="band.cta">Parler à un conseiller</a>
-    </div>
+  <!-- FACTS -->
+  <section class="facts" aria-label="TK Béton">
+    <dl class="wrap facts-grid">
+      <div><dt class="mono" data-i18n="fact.1.k"></dt><dd data-i18n="fact.1.v"></dd></div>
+      <div><dt class="mono" data-i18n="fact.2.k"></dt><dd data-i18n="fact.2.v"></dd></div>
+      <div><dt class="mono" data-i18n="fact.3.k"></dt><dd data-i18n="fact.3.v"></dd></div>
+      <div><dt class="mono" data-i18n="fact.4.k"></dt><dd data-i18n="fact.4.v"></dd></div>
+      <div><dt class="mono" data-i18n="fact.5.k"></dt><dd data-i18n="fact.5.v"></dd></div>
+    </dl>
   </section>
 
-  <!-- REFERENCES -->
-  <section class="section section-stone" id="references" aria-labelledby="sig-title">
+  <!-- 01 RANGES -->
+  <section class="sec" id="gammes" aria-labelledby="ranges-title">
     <div class="wrap">
-      <header class="section-head">
-        <p class="eyebrow dark" data-i18n="sig.eyebrow">Pièces signature</p>
-        <h2 id="sig-title" data-i18n="sig.title"></h2>
-        <p class="sub" data-i18n="sig.lead"></p>
+      <header class="sec-head">
+        <p class="sec-label mono"><span>01</span> <span data-i18n="nav.ranges">Gammes</span></p>
+        <div>
+          <h2 id="ranges-title" data-i18n="ranges.title">15 modèles. 4 familles.</h2>
+          <p class="sec-lead" data-i18n="ranges.lead"></p>
+        </div>
       </header>
-    </div>
-    <ul class="rail" tabindex="0" aria-label="TK PORT, DOUBLE T, CRISTAL, FÈS RUSTIQUE, P1-CR1, BORNES">
-      <li><img src="images/tk_port.jpg" width="715" height="500" alt="TK PORT" loading="lazy"><div><b>TK PORT</b><span data-i18n="sig.paves"></span></div></li>
-      <li><img src="images/double_t.jpg" width="715" height="500" alt="Double T" loading="lazy"><div><b>DOUBLE T</b><span data-i18n="sig.paves"></span></div></li>
-      <li><img src="images/cristal.jpg" width="715" height="500" alt="Cristal" loading="lazy"><div><b>CRISTAL</b><span data-i18n="sig.paves"></span></div></li>
-      <li><img src="images/fes_rustique.jpg" width="715" height="500" alt="Fès Rustique" loading="lazy"><div><b>FÈS RUSTIQUE</b><span data-i18n="sig.paves"></span></div></li>
-      <li><img src="images/bornes_slides1.jpg" width="715" height="500" alt="Bornes" loading="lazy"><div><b>BORNES</b><span data-i18n="sig.mobilier"></span></div></li>
-    </ul>
-  </section>
 
-  <!-- CRAFT -->
-  <section class="section section-dark" id="savoir-faire" aria-labelledby="craft-title">
-    <div class="wrap craft-grid">
-      <figure class="craft-visual"><img src="images/agadir-slides2.jpg" width="715" height="500" alt="Réalisation TK Béton" loading="lazy"></figure>
-      <div>
-        <p class="eyebrow" data-i18n="craft.eyebrow">Savoir-faire</p>
-        <h2 id="craft-title" data-i18n="craft.title"></h2>
-        <p class="body" data-i18n="craft.p"></p>
-        <ul class="checks">
-          <li data-i18n="craft.l1"></li>
-          <li data-i18n="craft.l2"></li>
-          <li data-i18n="craft.l3"></li>
-        </ul>
-        <a class="btn btn-gold" href="#contact" data-i18n="craft.cta">Parler à un conseiller</a>
+      <div class="filters mono" role="group" aria-label="Filtre">
+        <button type="button" data-filter="all" aria-pressed="true"><span data-i18n="filter.all">Tout</span><sup>15</sup></button>
+        <button type="button" data-filter="paves" aria-pressed="false"><span data-i18n="fam.paves">Pavés</span><sup>10</sup></button>
+        <button type="button" data-filter="bordures" aria-pressed="false"><span data-i18n="fam.bordures">Bordures</span><sup>2</sup></button>
+        <button type="button" data-filter="caniveaux" aria-pressed="false"><span data-i18n="fam.caniveaux">Caniveaux</span><sup>1</sup></button>
+        <button type="button" data-filter="mobilier" aria-pressed="false"><span data-i18n="fam.mobilier">Mobilier urbain</span><sup>2</sup></button>
+      </div>
+
+      <div class="ranges">
+        <ol class="index">
+          <li data-family="paves"><a class="row" href="#contact" data-product="AGADIR" data-img="images/agadir-slides2.jpg"><span class="num mono">01</span><img class="thumb" src="images/agadir-slides2.jpg" width="715" height="500" alt="" loading="lazy"><span class="name">Agadir</span><span class="fam mono" data-i18n="fam.paves">Pavés</span><span class="arrow" aria-hidden="true">→</span></a></li>
+          <li data-family="paves"><a class="row" href="#contact" data-product="SEBOU" data-img="images/sebou-slides2.jpg"><span class="num mono">02</span><img class="thumb" src="images/sebou-slides2.jpg" width="715" height="500" alt="" loading="lazy"><span class="name">Sebou</span><span class="fam mono" data-i18n="fam.paves">Pavés</span><span class="arrow" aria-hidden="true">→</span></a></li>
+          <li data-family="paves"><a class="row" href="#contact" data-product="KASBAH" data-img="images/kasbah-slides2.jpg"><span class="num mono">03</span><img class="thumb" src="images/kasbah-slides2.jpg" width="715" height="500" alt="" loading="lazy"><span class="name">Kasbah</span><span class="fam mono" data-i18n="fam.paves">Pavés</span><span class="arrow" aria-hidden="true">→</span></a></li>
+          <li data-family="paves"><a class="row" href="#contact" data-product="CHELLAH" data-img="images/chellah-slides2.jpg"><span class="num mono">04</span><img class="thumb" src="images/chellah-slides2.jpg" width="715" height="500" alt="" loading="lazy"><span class="name">Chellah</span><span class="fam mono" data-i18n="fam.paves">Pavés</span><span class="arrow" aria-hidden="true">→</span></a></li>
+          <li data-family="paves"><a class="row" href="#contact" data-product="TANGER MED" data-img="images/tanger_med-slides2.jpg"><span class="num mono">05</span><img class="thumb" src="images/tanger_med-slides2.jpg" width="715" height="500" alt="" loading="lazy"><span class="name">Tanger Med</span><span class="fam mono" data-i18n="fam.paves">Pavés</span><span class="arrow" aria-hidden="true">→</span></a></li>
+          <li data-family="paves"><a class="row" href="#contact" data-product="KENITRA" data-img="images/kenitra-slides2.jpg"><span class="num mono">06</span><img class="thumb" src="images/kenitra-slides2.jpg" width="715" height="500" alt="" loading="lazy"><span class="name">Kenitra</span><span class="fam mono" data-i18n="fam.paves">Pavés</span><span class="arrow" aria-hidden="true">→</span></a></li>
+          <li data-family="paves"><a class="row" href="#contact" data-product="TK PORT" data-img="images/tk_port.jpg"><span class="num mono">07</span><img class="thumb" src="images/tk_port.jpg" width="715" height="500" alt="" loading="lazy"><span class="name">TK Port</span><span class="fam mono" data-i18n="fam.paves">Pavés</span><span class="arrow" aria-hidden="true">→</span></a></li>
+          <li data-family="paves"><a class="row" href="#contact" data-product="DOUBLE T" data-img="images/double_t.jpg"><span class="num mono">08</span><img class="thumb" src="images/double_t.jpg" width="715" height="500" alt="" loading="lazy"><span class="name">Double T</span><span class="fam mono" data-i18n="fam.paves">Pavés</span><span class="arrow" aria-hidden="true">→</span></a></li>
+          <li data-family="paves"><a class="row" href="#contact" data-product="CRISTAL" data-img="images/cristal.jpg"><span class="num mono">09</span><img class="thumb" src="images/cristal.jpg" width="715" height="500" alt="" loading="lazy"><span class="name">Cristal</span><span class="fam mono" data-i18n="fam.paves">Pavés</span><span class="arrow" aria-hidden="true">→</span></a></li>
+          <li data-family="paves"><a class="row" href="#contact" data-product="FÈS RUSTIQUE" data-img="images/fes_rustique.jpg"><span class="num mono">10</span><img class="thumb" src="images/fes_rustique.jpg" width="715" height="500" alt="" loading="lazy"><span class="name">Fès Rustique</span><span class="fam mono" data-i18n="fam.paves">Pavés</span><span class="arrow" aria-hidden="true">→</span></a></li>
+          <li data-family="bordures"><a class="row" href="#contact" data-product="T1 · T2 · T3 · T4" data-img="images/t1-t2-t3-t4-slides.jpg"><span class="num mono">11</span><img class="thumb" src="images/t1-t2-t3-t4-slides.jpg" width="715" height="500" alt="" loading="lazy"><span class="name">T1 · T2 · T3 · T4</span><span class="fam mono" data-i18n="fam.bordures">Bordures</span><span class="arrow" aria-hidden="true">→</span></a></li>
+          <li data-family="bordures"><a class="row" href="#contact" data-product="P1-CR1" data-img="images/p1-cr1.jpg"><span class="num mono">12</span><img class="thumb" src="images/p1-cr1.jpg" width="715" height="500" alt="" loading="lazy"><span class="name">P1-CR1</span><span class="fam mono" data-i18n="fam.bordures">Bordures</span><span class="arrow" aria-hidden="true">→</span></a></li>
+          <li data-family="caniveaux"><a class="row" href="#contact" data-product="CANIVEAUX" data-img="images/caniveaux.jpg"><span class="num mono">13</span><img class="thumb" src="images/caniveaux.jpg" width="429" height="300" alt="" loading="lazy"><span class="name">Caniveaux</span><span class="fam mono" data-i18n="fam.caniveaux">Caniveaux</span><span class="arrow" aria-hidden="true">→</span></a></li>
+          <li data-family="mobilier"><a class="row" href="#contact" data-product="BORNES" data-img="images/bornes.jpg"><span class="num mono">14</span><img class="thumb" src="images/bornes.jpg" width="715" height="500" alt="" loading="lazy"><span class="name">Bornes</span><span class="fam mono" data-i18n="fam.mobilier">Mobilier urbain</span><span class="arrow" aria-hidden="true">→</span></a></li>
+          <li data-family="mobilier"><a class="row" href="#contact" data-product="BANCS" data-img="images/bancs_slides1.jpg"><span class="num mono">15</span><img class="thumb" src="images/bancs_slides1.jpg" width="715" height="500" alt="" loading="lazy"><span class="name">Bancs</span><span class="fam mono" data-i18n="fam.mobilier">Mobilier urbain</span><span class="arrow" aria-hidden="true">→</span></a></li>
+        </ol>
+        <figure class="fig preview" aria-live="polite">
+          <img id="preview-img" src="images/agadir-slides2.jpg" width="715" height="500" alt="Agadir">
+          <figcaption class="mono" id="preview-cap"></figcaption>
+        </figure>
       </div>
     </div>
   </section>
 
-  <!-- CONTACT -->
-  <section class="section section-stone" id="contact" aria-labelledby="contact-title">
-    <div class="wrap contact-grid">
-      <div>
-        <img class="contact-logo" src="images/logo-color.png" width="323" height="145" alt="TK Béton — Beton Engineering" loading="lazy">
-        <p class="eyebrow dark" data-i18n="contact.eyebrow">Contact</p>
-        <h2 id="contact-title" data-i18n="contact.title"></h2>
-        <a class="phone" href="tel:+212537522534" dir="ltr">+212 5 37 52 25 34</a>
-        <p class="hours" data-i18n="contact.hours"></p>
-        <address class="sites">
-          <div>
-            <h3>Kénitra <small data-i18n="contact.fact"></small></h3>
-            <p>Nouvelle Zone Industrielle Belad Dandoun, Sidi Taybi, Kénitra<br><span dir="ltr">+212 5 37 52 25 34</span></p>
-          </div>
-          <div>
-            <h3>Casablanca <small data-i18n="contact.hq"></small></h3>
-            <p>174 angle Bd Zerktouni et Moussa Ben Noussair N°16, Casablanca<br><span dir="ltr">+212 5 22 20 90 40</span></p>
-          </div>
-          <a class="mail" href="mailto:info@tkbeton.ma" dir="ltr">info@tkbeton.ma</a>
-        </address>
+  <!-- 02 CLIENTS -->
+  <section class="sec" id="pour-qui" aria-labelledby="clients-title">
+    <div class="wrap">
+      <header class="sec-head">
+        <p class="sec-label mono"><span>02</span> <span data-i18n="nav.clients">Pour qui</span></p>
+        <div><h2 id="clients-title" data-i18n="clients.title">Du jardin privé au grand chantier.</h2></div>
+      </header>
+      <div class="clients">
+        <article>
+          <figure class="fig"><img src="images/kenitra-slides2.jpg" width="715" height="500" alt="Allée de villa en pavés Kenitra" loading="lazy"><figcaption class="mono">Kenitra</figcaption></figure>
+          <h3 data-i18n="client.1.t"></h3><p data-i18n="client.1.d"></p>
+        </article>
+        <article>
+          <figure class="fig"><img src="images/bancs_slides1.jpg" width="715" height="500" alt="Bancs monolithes en béton" loading="lazy"><figcaption class="mono">Bancs</figcaption></figure>
+          <h3 data-i18n="client.2.t"></h3><p data-i18n="client.2.d"></p>
+        </article>
+        <article>
+          <figure class="fig"><img src="images/tanger_med-slides2.jpg" width="715" height="500" alt="Pavés Tanger Med sur grande surface" loading="lazy"><figcaption class="mono">Tanger Med</figcaption></figure>
+          <h3 data-i18n="client.3.t"></h3><p data-i18n="client.3.d"></p>
+        </article>
       </div>
-      <form class="form" id="contact-form" novalidate>
-        <label><span data-i18n="contact.form.name">Nom complet</span><input name="name" type="text" autocomplete="name" required></label>
-        <label><span data-i18n="contact.form.phone">Téléphone</span><input name="phone" type="tel" autocomplete="tel" required dir="ltr"></label>
-        <label><span data-i18n="contact.form.msg">Votre projet</span><textarea name="msg" rows="4" required></textarea></label>
-        <button class="btn btn-dark" type="submit" data-i18n="contact.form.send">Envoyer ma demande</button>
-        <p class="note" data-i18n="contact.form.note"></p>
-      </form>
+    </div>
+  </section>
+
+  <!-- 03 FACTORY -->
+  <section class="sec sec-ink" id="usine" aria-labelledby="factory-title">
+    <div class="wrap">
+      <header class="sec-head">
+        <p class="sec-label mono"><span>03</span> <span data-i18n="nav.factory">Usine</span></p>
+        <div><h2 id="factory-title" class="statement" data-i18n="factory.title"></h2></div>
+      </header>
+      <div class="factory-body">
+        <p data-i18n="factory.p"></p>
+        <a class="btn btn-yellow" href="#contact" data-product="Catalogue" data-i18n="factory.cta">Demander le catalogue</a>
+      </div>
+    </div>
+    <figure class="fig factory-fig">
+      <img src="images/slide3.jpg" width="1920" height="700" alt="Mobilier urbain TK Béton : bancs et bornes en béton" loading="lazy">
+      <figcaption class="mono wrap"><span data-i18n="fig.word">Fig.</span> 03 — <span data-i18n="fig.3"></span></figcaption>
+    </figure>
+  </section>
+
+  <!-- 04 CONTACT -->
+  <section class="sec" id="contact" aria-labelledby="contact-title">
+    <div class="wrap">
+      <header class="sec-head">
+        <p class="sec-label mono"><span>04</span> <span data-i18n="nav.contact">Contact</span></p>
+        <div><h2 id="contact-title" data-i18n="contact.title">Parlons de votre projet.</h2></div>
+      </header>
+      <div class="contact-grid">
+        <div>
+          <a class="big-phone" href="tel:+212537522534" dir="ltr">05 37 52 25 34</a>
+          <p class="mono hours" data-i18n="contact.hours"></p>
+          <address class="sites">
+            <div>
+              <p class="mono site-k">Kénitra — <span data-i18n="contact.factory"></span></p>
+              <p>Nouvelle Zone Industrielle Belad Dandoun, Sidi Taybi, Kénitra</p>
+              <p class="mono" dir="ltr">+212 5 37 52 25 34</p>
+            </div>
+            <div>
+              <p class="mono site-k">Casablanca — <span data-i18n="contact.hq"></span></p>
+              <p>174 angle Bd Zerktouni et Moussa Ben Noussair N°16, Casablanca</p>
+              <p class="mono" dir="ltr">+212 5 22 20 90 40</p>
+            </div>
+          </address>
+          <a class="mail mono" href="mailto:info@tkbeton.ma" dir="ltr">info@tkbeton.ma</a>
+        </div>
+        <form class="form" id="contact-form" novalidate>
+          <div class="hazard" aria-hidden="true"></div>
+          <p class="form-title mono" data-i18n="form.title">Demande de devis</p>
+          <label><span class="mono" data-i18n="form.name">Nom complet</span><input name="name" type="text" autocomplete="name" required></label>
+          <label><span class="mono" data-i18n="form.phone">Téléphone</span><input name="phone" type="tel" autocomplete="tel" required dir="ltr"></label>
+          <label><span class="mono" data-i18n="form.msg">Votre projet</span><textarea name="msg" rows="4" required></textarea></label>
+          <button class="btn btn-ink" type="submit"><span data-i18n="form.send">Envoyer la demande</span><span class="arrow" aria-hidden="true">→</span></button>
+          <p class="note" data-i18n="form.note"></p>
+        </form>
+      </div>
     </div>
   </section>
 </main>
 
 <footer class="site-footer">
-  <div class="wrap">
-    <img class="foot-logo" src="images/logo-light.png" width="323" height="145" alt="TK Béton — Beton Engineering" loading="lazy">
-    <p class="foot-tag" data-i18n="footer.tag">Béton préfabriqué · Kénitra · Casablanca</p>
-    <div class="foot-row">
-      <p>© 2026 TK Béton. <span data-i18n="footer.rights">Tous droits réservés.</span></p>
-      <a href="#top" aria-label="Top">↑</a>
-    </div>
+  <div class="hazard" aria-hidden="true"></div>
+  <div class="wrap foot">
+    <img src="images/logo-light.png" width="323" height="145" alt="TK Béton — Beton Engineering" loading="lazy">
+    <nav class="foot-nav mono" aria-label="Footer">
+      <a href="#gammes" data-i18n="nav.ranges">Gammes</a>
+      <a href="#pour-qui" data-i18n="nav.clients">Pour qui</a>
+      <a href="#usine" data-i18n="nav.factory">Usine</a>
+      <a href="#contact" data-i18n="nav.contact">Contact</a>
+    </nav>
+    <p class="mono foot-legal">© 2026 TK Béton — <span data-i18n="footer.rights">Tous droits réservés.</span></p>
   </div>
 </footer>
 
-<a class="call-bar" href="tel:+212537522534"><span data-i18n="call.now">Appeler</span> <span dir="ltr">+212 5 37 52 25 34</span></a>
+<a class="call-bar mono" href="tel:+212537522534"><span data-i18n="call.now">Appeler</span> <span dir="ltr">05 37 52 25 34</span></a>
 
 <script src="js/i18n.js"></script>
 <script src="js/main.js"></script>

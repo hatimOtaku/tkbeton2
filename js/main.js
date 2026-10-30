@@ -2,7 +2,6 @@
   'use strict';
   var doc = document;
   var root = doc.documentElement;
-  root.classList.add('js');
 
   /* ---------- Translation ---------- */
   var SUPPORTED = ['fr', 'en', 'ar'];
@@ -22,13 +21,10 @@
     doc.querySelectorAll('[data-i18n]').forEach(function (el) { el.textContent = t(el.getAttribute('data-i18n')); });
     doc.querySelectorAll('[data-lang]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-lang') === next)); });
     safeSet('tk-lang', next);
+    if (current) { showPreview(current); }
   }
 
-  /* ---------- Header, menu ---------- */
-  var header = doc.querySelector('.site-header');
-  function onScroll() { header.classList.toggle('scrolled', window.scrollY > 120); }
-  window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
-
+  /* ---------- Mobile menu ---------- */
   var menuBtn = doc.querySelector('.menu-btn');
   var nav = doc.getElementById('main-nav');
   menuBtn.addEventListener('click', function () {
@@ -36,34 +32,61 @@
     menuBtn.setAttribute('aria-expanded', String(open));
   });
   nav.addEventListener('click', function (e) {
-    if (e.target.tagName === 'A') { nav.classList.remove('open'); menuBtn.setAttribute('aria-expanded', 'false'); }
+    if (e.target.closest('a')) { nav.classList.remove('open'); menuBtn.setAttribute('aria-expanded', 'false'); }
   });
 
-  /* ---------- Expanding collection panels ---------- */
-  var panels = doc.querySelectorAll('.panel');
-  function activate(p) { panels.forEach(function (x) { x.classList.toggle('active', x === p); }); }
-  panels.forEach(function (p) {
-    p.addEventListener('mouseenter', function () { activate(p); });
-    p.addEventListener('focus', function () { activate(p); });
+  /* ---------- Range index: live preview of the hovered model ---------- */
+  var rows = Array.prototype.slice.call(doc.querySelectorAll('.index .row'));
+  var previewImg = doc.getElementById('preview-img');
+  var previewCap = doc.getElementById('preview-cap');
+  var current = null;
+
+  function showPreview(row) {
+    var family = row.parentElement.getAttribute('data-family');
+    var name = row.querySelector('.name').textContent;
+    var num = row.querySelector('.num').textContent;
+    rows.forEach(function (r) { r.classList.toggle('is-current', r === row); });
+    previewCap.textContent = t('fig.word') + ' ' + num + ' — ' + name + ' · ' + t('fam.' + family);
+    previewImg.alt = name;
+    if (row !== current && previewImg.getAttribute('src') !== row.getAttribute('data-img')) {
+      previewImg.classList.add('swap');
+      previewImg.onload = function () { previewImg.classList.remove('swap'); };
+      previewImg.src = row.getAttribute('data-img');
+    }
+    current = row;
+  }
+  rows.forEach(function (row) {
+    row.addEventListener('mouseenter', function () { showPreview(row); });
+    row.addEventListener('focus', function () { showPreview(row); });
   });
-  if (panels.length) { activate(panels[0]); }
 
-  /* ---------- Scroll reveal ---------- */
-  var revealEls = doc.querySelectorAll('.section-head, .rail li, .band-copy, .craft-grid > *, .contact-grid > *, .pillars-grid > div, .panels');
-  revealEls.forEach(function (el) { el.classList.add('reveal'); });
-  if ('IntersectionObserver' in window) {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
-    }, { threshold: 0.12 });
-    revealEls.forEach(function (el) { io.observe(el); });
-  } else { revealEls.forEach(function (el) { el.classList.add('in'); }); }
+  /* ---------- Family filter ---------- */
+  var filterBtns = doc.querySelectorAll('[data-filter]');
+  filterBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var f = btn.getAttribute('data-filter');
+      filterBtns.forEach(function (b) { b.setAttribute('aria-pressed', String(b === btn)); });
+      var first = null;
+      rows.forEach(function (row) {
+        var li = row.parentElement;
+        var show = f === 'all' || li.getAttribute('data-family') === f;
+        li.hidden = !show;
+        if (show && !first) { first = row; }
+      });
+      if (first) { showPreview(first); }
+    });
+  });
 
-  /* ---------- Contact: quote buttons pre-fill the message ---------- */
+  /* ---------- Quote links pre-fill the form with the model name ---------- */
   var form = doc.getElementById('contact-form');
+  var autoFilled = '';
   doc.querySelectorAll('[data-product]').forEach(function (a) {
     a.addEventListener('click', function () {
       var msg = form.elements.msg;
-      if (!msg.value) { msg.value = a.getAttribute('data-product') + ' — '; }
+      if (!msg.value || msg.value === autoFilled) {
+        autoFilled = t('nav.quote') + ' — ' + a.getAttribute('data-product') + ' — ';
+        msg.value = autoFilled;
+      }
     });
   });
 
@@ -74,9 +97,10 @@
     window.location.href = 'mailto:info@tkbeton.ma?subject=' + encodeURIComponent('TK Béton — ' + form.elements.name.value) + '&body=' + encodeURIComponent(body);
   });
 
-  /* ---------- Language buttons (French is the default) ---------- */
+  /* ---------- Language (French by default; a visitor's own choice is remembered) ---------- */
   doc.querySelectorAll('[data-lang]').forEach(function (b) {
     b.addEventListener('click', function () { applyLang(b.getAttribute('data-lang')); });
   });
+  if (rows.length) { showPreview(rows[0]); }
   applyLang(safeGet('tk-lang') || 'fr');
 })();
