@@ -240,9 +240,12 @@ html[lang="ar"] .main-nav a { font-size: .95rem; text-transform: none; }
 
 .book { padding-block: clamp(1.5rem, 3vw, 2.5rem) clamp(2.5rem, 5vw, 4rem); border-bottom: var(--rule); }
 .book-stage { display: grid; grid-template-columns: auto minmax(0, auto) auto; justify-content: center; grid-template-areas: "prev page next"; align-items: center; gap: clamp(.8rem, 2vw, 2rem); }
-.book-page { grid-area: page; justify-self: center; display: block; line-height: 0; cursor: zoom-in; }
+.book-page { grid-area: page; justify-self: center; display: block; line-height: 0; cursor: grab; }
+.book-page:active { cursor: grabbing; }
 .book-page img { width: auto; height: auto; max-width: 100%; max-height: calc(100svh - 12rem); border: var(--rule); background: #fff; box-shadow: 10px 10px 0 var(--yellow); touch-action: pan-y pinch-zoom; user-select: none; -webkit-user-drag: none; }
 [dir="rtl"] .book-page img { box-shadow: -10px 10px 0 var(--yellow); }
+.book-page img { transition: transform .25s var(--ease); }
+.book-page img.dragging { transition: none; }
 .book-page img.turn-fwd { animation: turn-fwd .35s var(--ease); }
 .book-page img.turn-back { animation: turn-back .35s var(--ease); }
 @keyframes turn-fwd { from { opacity: .2; transform: translateX(28px); } }
@@ -269,6 +272,8 @@ html[lang="ar"] .main-nav a { font-size: .95rem; text-transform: none; }
 .book-title { margin: 0; color: var(--ink-2); }
 
 .book-thumbs { list-style: none; margin: 2rem 0 0; padding: .4rem .2rem 1rem; display: flex; gap: .7rem; overflow-x: auto; scroll-snap-type: x proximity; }
+.book-thumbs { cursor: grab; }
+.book-thumbs.dragging { cursor: grabbing; scroll-snap-type: none; user-select: none; }
 .book-thumbs li { flex: none; scroll-snap-align: center; }
 .book-thumb { display: grid; gap: .3rem; justify-items: center; width: 4.6rem; padding: 0; border: 0; background: none; }
 .book-thumb img { width: 100%; height: auto; aspect-ratio: 480 / 686; object-fit: cover; border: var(--rule); opacity: .7; transition: opacity .2s, transform .2s var(--ease); }

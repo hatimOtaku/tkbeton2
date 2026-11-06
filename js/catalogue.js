@@ -127,23 +127,85 @@
     else if (e.key === 'ArrowLeft') { go(index + (rtl() ? 1 : -1)); }
   });
 
-  /* Swipe with one finger; pinch-zoom stays free */
-  var sx = null, sy = null, swiped = false;
-  link.addEventListener('touchstart', function (e) {
-    if (e.touches.length !== 1) { sx = null; return; }
-    sx = e.touches[0].clientX; sy = e.touches[0].clientY; swiped = false;
-  }, { passive: true });
-  link.addEventListener('touchend', function (e) {
-    if (sx === null) { return; }
-    var dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy;
-    sx = null;
-    if (Math.abs(dx) > SWIPE_PX && Math.abs(dx) > Math.abs(dy)) {
+  /* ---------- Slide the page: finger swipe or mouse drag ----------
+     The page follows the pointer while dragging; letting go past SWIPE_PX turns it. */
+  var DRAG_FOLLOW = 0.6;
+  var sx = null, sy = null, dragDx = 0, swiped = false;
+
+  function follow(dx) { img.style.transform = 'translateX(' + (dx * DRAG_FOLLOW) + 'px)'; }
+  function release(dx) {
+    img.classList.remove('dragging');
+    img.style.transform = '';
+    if (Math.abs(dx) > SWIPE_PX) {
       swiped = true;
       go(index + ((dx < 0) !== rtl() ? 1 : -1));
     }
+  }
+
+  /* Touch: one finger only, so pinch-zoom stays free */
+  link.addEventListener('touchstart', function (e) {
+    if (e.touches.length !== 1) { sx = null; return; }
+    sx = e.touches[0].clientX; sy = e.touches[0].clientY; dragDx = 0; swiped = false;
+    img.classList.add('dragging');
+  }, { passive: true });
+  link.addEventListener('touchmove', function (e) {
+    if (sx === null || e.touches.length !== 1) { return; }
+    var dx = e.touches[0].clientX - sx, dy = e.touches[0].clientY - sy;
+    if (Math.abs(dx) > Math.abs(dy)) { dragDx = dx; follow(dx); }
+  }, { passive: true });
+  link.addEventListener('touchend', function () {
+    if (sx === null) { return; }
+    sx = null;
+    release(dragDx);
   });
-  /* a swipe must not also open the full-size page */
+
+  /* Mouse: press, drag sideways, let go */
+  link.addEventListener('pointerdown', function (e) {
+    if (e.pointerType !== 'mouse' || e.button !== 0) { return; }
+    sx = e.clientX; dragDx = 0; swiped = false;
+    img.classList.add('dragging');
+    link.setPointerCapture(e.pointerId);
+  });
+  link.addEventListener('pointermove', function (e) {
+    if (e.pointerType !== 'mouse' || sx === null) { return; }
+    dragDx = e.clientX - sx;
+    follow(dragDx);
+  });
+  function endMouse(e) {
+    if (e.pointerType !== 'mouse' || sx === null) { return; }
+    sx = null;
+    if (Math.abs(dragDx) > 5) { swiped = true; }
+    release(dragDx);
+  }
+  link.addEventListener('pointerup', endMouse);
+  link.addEventListener('pointercancel', endMouse);
+
+  /* a drag must not also open the full-size page */
   link.addEventListener('click', function (e) { if (swiped) { e.preventDefault(); swiped = false; } });
+  link.addEventListener('dragstart', function (e) { e.preventDefault(); });
+
+  /* ---------- Drag the page-pictures strip with the mouse ---------- */
+  var stripX = null, stripStart = 0, stripMoved = false;
+  strip.addEventListener('pointerdown', function (e) {
+    if (e.pointerType !== 'mouse' || e.button !== 0) { return; }
+    stripX = e.clientX; stripStart = strip.scrollLeft; stripMoved = false;
+  });
+  strip.addEventListener('pointermove', function (e) {
+    if (stripX === null) { return; }
+    var dx = e.clientX - stripX;
+    if (!stripMoved && Math.abs(dx) > 5) {
+      stripMoved = true;
+      strip.classList.add('dragging');
+      strip.setPointerCapture(e.pointerId);
+    }
+    if (stripMoved) { strip.scrollLeft = stripStart - dx; }
+  });
+  function endStrip() { stripX = null; strip.classList.remove('dragging'); }
+  strip.addEventListener('pointerup', endStrip);
+  strip.addEventListener('pointercancel', endStrip);
+  /* a drag must not also jump to the thumb under the pointer */
+  strip.addEventListener('click', function (e) { if (stripMoved) { e.stopPropagation(); e.preventDefault(); stripMoved = false; } }, true);
+  strip.addEventListener('dragstart', function (e) { e.preventDefault(); });
 
   function relabel() {
     prev.setAttribute('aria-label', t('cat.prev'));
