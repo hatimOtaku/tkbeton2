@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Catalogue — TK Béton</title>
+<meta name="description" content="Catalogue TK Béton : pavés autobloquants, bordures, caniveaux, mobilier urbain et techniques de pose. À feuilleter en ligne ou à télécharger en PDF.">
+<meta name="theme-color" content="#e8e5de">
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+<script>
+/* Set language/direction before first paint so Arabic never flashes as LTR French. */
+(function(){try{var l=localStorage.getItem('tk-lang');if(['fr','en','ar'].indexOf(l)<0){l='fr';}
+var d=document.documentElement;d.lang=l;d.dir=l==='ar'?'rtl':'ltr';}catch(e){}})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-title-key="cat.meta">
+
+<header class="site-header" id="top">
+  <a class="brand" href="index.html"><img src="images/logo-color.png" width="323" height="145" alt="TK Béton — Beton Engineering"></a>
+  <nav class="main-nav" id="main-nav" aria-label="Navigation">
+    <a href="index.html#gammes"><span class="n">01</span><span data-i18n="nav.ranges">Gammes</span></a>
+    <a href="index.html#pour-qui"><span class="n">02</span><span data-i18n="nav.clients">Pour qui</span></a>
+    <a href="index.html#usine"><span class="n">03</span><span data-i18n="nav.factory">Usine</span></a>
+    <a href="index.html#contact"><span class="n">04</span><span data-i18n="nav.contact">Contact</span></a>
+    <a href="catalogue.html" aria-current="page"><span class="n">05</span><span data-i18n="nav.catalogue">Catalogue</span></a>
+  </nav>
+  <div class="header-tools">
+    <a class="head-phone" href="tel:+212537522534" dir="ltr">05 37 52 25 34</a>
+    <div class="lang" role="group" aria-label="Langue / Language / اللغة">
+      <button type="button" data-lang="fr" aria-pressed="true">FR</button>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+      <button type="button" data-lang="ar" aria-pressed="false" lang="ar">ع</button>
+    </div>
+    <a class="btn btn-ink btn-sm" href="index.html#contact" data-i18n="nav.quote">Devis</a>
+    <button class="menu-btn" type="button" aria-controls="main-nav" aria-expanded="false" aria-label="Menu"><span></span><span></span></button>
+  </div>
+</header>
+
+<main>
+  <section class="hero cat-hero" aria-labelledby="cat-title">
+    <div class="wrap">
+      <p class="kicker mono"><span class="sec-label-n">05</span> <span data-i18n="nav.catalogue">Catalogue</span> — TK Béton · Beton Engineering</p>
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <h1 id="cat-title" data-i18n="cat.title">Le catalogue TK Béton.</h1>
+          <p class="lead" data-i18n="cat.lead"></p>
+          <div class="cta-row">
+            <button class="btn btn-ink" type="button" data-open-page="1"><span data-i18n="cat.open">Feuilleter</span><span class="arrow" aria-hidden="true">→</span></button>
+            <a class="btn btn-line" href="catalogue/catalogue-tk-beton.pdf" download><span data-i18n="cat.download">Télécharger le PDF</span><span class="dl-size">PDF · <span data-i18n="cat.size">8 Mo</span></span></a>
+          </div>
+        </div>
+        <button class="cover" type="button" data-open-page="1" aria-label="Couverture">
+          <img src="catalogue/thumbs/p01.jpg" width="480" height="687" alt="Couverture du catalogue TK Béton">
+          <span class="cover-cap mono"><span data-i18n="cat.pageabbr">p.</span> 01 — <span data-i18n="cat.cover">Couverture</span></span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <nav class="chapter-nav mono" aria-label="Chapitres">
+    <div class="wrap chapter-nav-inner">
+      <a href="#ch-intro"><span class="n">01</span><span data-i18n="cat.ch.intro">Présentation</span></a>
+      <a href="#ch-paves"><span class="n">02</span><span data-i18n="cat.ch.paves">Pavés autobloquants</span></a>
+      <a href="#ch-pose"><span class="n">03</span><span data-i18n="cat.ch.pose">Technique de pose</span></a>
+      <a href="#ch-bordures"><span class="n">04</span><span data-i18n="cat.ch.bordures">Bordures & caniveaux</span></a>
+      <a href="#ch-mobilier"><span class="n">05</span><span data-i18n="cat.ch.mobilier">Mobilier urbain</span></a>
+      <a href="#ch-galerie"><span class="n">06</span><span data-i18n="cat.ch.galerie">Galerie & contact</span></a>
+    </div>
+  </nav>
+
+  <!-- Chapters are rendered by js/catalogue.js from its page list -->
+  <div id="chapters"></div>
+  <noscript><p class="wrap noscript"><a href="catalogue/catalogue-tk-beton.pdf">catalogue-tk-beton.pdf</a></p></noscript>
+
+  <section class="sec sec-ink cat-cta" aria-labelledby="cta-title">
+    <div class="wrap cat-cta-grid">
+      <h2 id="cta-title" class="statement" data-i18n="cat.cta.title">Un modèle vous intéresse ?</h2>
+      <div>
+        <p data-i18n="cat.cta.p"></p>
+        <div class="cta-row">
+          <a class="btn btn-yellow" href="index.html#contact"><span data-i18n="cat.cta.btn">Demander un devis</span><span class="arrow" aria-hidden="true">→</span></a>
+          <a class="btn btn-line-light" href="tel:+212537522534" dir="ltr">05 37 52 25 34</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="hazard" aria-hidden="true"></div>
+  <div class="wrap foot">
+    <img src="images/logo-light.png" width="323" height="145" alt="TK Béton — Beton Engineering" loading="lazy">
+    <nav class="foot-nav mono" aria-label="Footer">
+      <a href="index.html#gammes" data-i18n="nav.ranges">Gammes</a>
+      <a href="index.html#pour-qui" data-i18n="nav.clients">Pour qui</a>
+      <a href="index.html#usine" data-i18n="nav.factory">Usine</a>
+      <a href="index.html#contact" data-i18n="nav.contact">Contact</a>
+      <a href="catalogue.html" data-i18n="nav.catalogue">Catalogue</a>
+    </nav>
+    <p class="mono foot-legal">© 2026 TK Béton — <span data-i18n="footer.rights">Tous droits réservés.</span></p>
+  </div>
+</footer>
+
+<a class="call-bar mono" href="tel:+212537522534"><span data-i18n="call.now">Appeler</span> <span dir="ltr">05 37 52 25 34</span></a>
+
+<!-- PAGE VIEWER -->
+<div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-labelledby="viewer-title" hidden>
+  <div class="viewer-bar mono">
+    <span class="viewer-count" id="viewer-count" dir="ltr">01 / 39</span>
+    <span class="viewer-title" id="viewer-title"></span>
+    <a class="viewer-dl" href="catalogue/catalogue-tk-beton.pdf" download>PDF ↓</a>
+    <button class="viewer-close" type="button" id="viewer-close" aria-label="Fermer">✕</button>
+  </div>
+  <div class="viewer-stage" id="viewer-stage">
+    <button class="viewer-nav prev" type="button" id="viewer-prev" aria-label="Page précédente"><span aria-hidden="true">←</span></button>
+    <img id="viewer-img" alt="">
+    <button class="viewer-nav next" type="button" id="viewer-next" aria-label="Page suivante"><span aria-hidden="true">→</span></button>
+  </div>
+</div>
+
+<script src="js/i18n.js"></script>
+<script src="js/main.js"></script>
+<script src="js/catalogue.js"></script>
+</body>
+</html>

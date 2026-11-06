@@ -11,17 +11,20 @@
   function safeGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
   function safeSet(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* storage unavailable */ } }
   function t(key) { return (T[lang] && T[lang][key]) || T.fr[key] || ''; }
+  /* Shared with page scripts (catalogue.js); they listen for 'tk:lang' to re-render. */
+  window.TK = { t: t };
 
   function applyLang(next) {
     if (SUPPORTED.indexOf(next) === -1) { next = 'fr'; }
     lang = next;
     root.lang = next;
     root.dir = next === 'ar' ? 'rtl' : 'ltr';
-    doc.title = t('meta.title');
+    doc.title = t(doc.body.getAttribute('data-title-key') || 'meta.title');
     doc.querySelectorAll('[data-i18n]').forEach(function (el) { el.textContent = t(el.getAttribute('data-i18n')); });
     doc.querySelectorAll('[data-lang]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-lang') === next)); });
     safeSet('tk-lang', next);
     if (current) { showPreview(current); }
+    doc.dispatchEvent(new CustomEvent('tk:lang'));
   }
 
   /* ---------- Mobile menu ---------- */
@@ -80,22 +83,24 @@
   /* ---------- Quote links pre-fill the form with the model name ---------- */
   var form = doc.getElementById('contact-form');
   var autoFilled = '';
-  doc.querySelectorAll('[data-product]').forEach(function (a) {
-    a.addEventListener('click', function () {
-      var msg = form.elements.msg;
-      if (!msg.value || msg.value === autoFilled) {
-        autoFilled = t('nav.quote') + ' — ' + a.getAttribute('data-product') + ' — ';
-        msg.value = autoFilled;
-      }
+  if (form) {
+    doc.querySelectorAll('[data-product]').forEach(function (a) {
+      a.addEventListener('click', function () {
+        var msg = form.elements.msg;
+        if (!msg.value || msg.value === autoFilled) {
+          autoFilled = t('nav.quote') + ' — ' + a.getAttribute('data-product') + ' — ';
+          msg.value = autoFilled;
+        }
+      });
     });
-  });
 
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    if (!form.checkValidity()) { form.reportValidity(); return; }
-    var body = form.elements.name.value + '\n' + form.elements.phone.value + '\n\n' + form.elements.msg.value;
-    window.location.href = 'mailto:info@tkbeton.ma?subject=' + encodeURIComponent('TK Béton — ' + form.elements.name.value) + '&body=' + encodeURIComponent(body);
-  });
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!form.checkValidity()) { form.reportValidity(); return; }
+      var body = form.elements.name.value + '\n' + form.elements.phone.value + '\n\n' + form.elements.msg.value;
+      window.location.href = 'mailto:info@tkbeton.ma?subject=' + encodeURIComponent('TK Béton — ' + form.elements.name.value) + '&body=' + encodeURIComponent(body);
+    });
+  }
 
   /* ---------- Language (French by default; a visitor's own choice is remembered) ---------- */
   doc.querySelectorAll('[data-lang]').forEach(function (b) {
