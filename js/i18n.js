@@ -59,10 +59,7 @@ window.TK_I18N = {
     "cat.meta": "Catalogue — TK Béton",
     "cat.title": "Le catalogue TK Béton.",
     "cat.lead": "40 pages : pavés autobloquants, bordures, caniveaux, mobilier urbain et techniques de pose. Feuilletez-le ici, ou téléchargez le PDF.",
-    "cat.open": "Feuilleter",
     "cat.download": "Télécharger le PDF",
-    "cat.size": "8 Mo",
-    "cat.cover": "Couverture",
     "cat.pageabbr": "p.",
     "cat.ch.intro": "Présentation",
     "cat.ch.paves": "Pavés autobloquants",
@@ -81,10 +78,10 @@ window.TK_I18N = {
     "cat.p.back": "Retrouvez-nous sur tkbeton.ma",
     "cat.prev": "Page précédente",
     "cat.next": "Page suivante",
-    "cat.close": "Fermer",
     "cat.cta.title": "Un modèle vous intéresse ?",
     "cat.cta.p": "Indiquez le nom du modèle et la surface dans votre demande de devis.",
-    "cat.cta.btn": "Demander un devis"
+    "cat.cta.btn": "Demander un devis",
+    "cat.hint": "Touchez les flèches ou glissez pour tourner les pages"
   },
   "en": {
     "meta.title": "TK Béton — Concrete pavers, kerbs, channels and street furniture",
@@ -144,10 +141,7 @@ window.TK_I18N = {
     "cat.meta": "Catalogue — TK Béton",
     "cat.title": "The TK Béton catalogue.",
     "cat.lead": "40 pages: interlocking pavers, kerbs, drainage channels, street furniture and laying techniques. Browse it here, or download the PDF.",
-    "cat.open": "Browse",
     "cat.download": "Download the PDF",
-    "cat.size": "8 MB",
-    "cat.cover": "Cover",
     "cat.pageabbr": "p.",
     "cat.ch.intro": "About",
     "cat.ch.paves": "Interlocking pavers",
@@ -166,10 +160,10 @@ window.TK_I18N = {
     "cat.p.back": "Find us at tkbeton.ma",
     "cat.prev": "Previous page",
     "cat.next": "Next page",
-    "cat.close": "Close",
     "cat.cta.title": "Interested in a model?",
     "cat.cta.p": "Mention the model name and the area in your quote request.",
-    "cat.cta.btn": "Request a quote"
+    "cat.cta.btn": "Request a quote",
+    "cat.hint": "Tap the arrows or swipe to turn the pages"
   },
   "ar": {
     "meta.title": "تي كي بيتون — بلاطات وأرصفة وقنوات تصريف وأثاث حضري من الخرسانة",
@@ -229,10 +223,7 @@ window.TK_I18N = {
     "cat.meta": "الكتالوج — تي كي بيتون",
     "cat.title": "كتالوج تي كي بيتون.",
     "cat.lead": "40 صفحة: بلاطات متشابكة، أرصفة، قنوات تصريف، أثاث حضري وتقنيات التركيب. تصفّحوه هنا أو حمّلوا ملف PDF.",
-    "cat.open": "تصفّح",
     "cat.download": "تحميل ملف PDF",
-    "cat.size": "8 ميغابايت",
-    "cat.cover": "الغلاف",
     "cat.pageabbr": "ص.",
     "cat.ch.intro": "تقديم",
     "cat.ch.paves": "بلاطات متشابكة",
@@ -251,9 +242,9 @@ window.TK_I18N = {
     "cat.p.back": "تابعونا على tkbeton.ma",
     "cat.prev": "الصفحة السابقة",
     "cat.next": "الصفحة التالية",
-    "cat.close": "إغلاق",
     "cat.cta.title": "هل يهمّكم نموذج ما؟",
     "cat.cta.p": "اذكروا اسم النموذج والمساحة في طلب عرض السعر.",
-    "cat.cta.btn": "اطلب عرض سعر"
+    "cat.cta.btn": "اطلب عرض سعر",
+    "cat.hint": "اضغطوا على الأسهم أو اسحبوا لتقليب الصفحات"
   }
 };

@@ -18,7 +18,7 @@ var d=document.documentElement;d.lang=l;d.dir=l==='ar'?'rtl':'ltr';}catch(e){}})
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
-<body data-title-key="cat.meta">
+<body class="page-catalogue" data-title-key="cat.meta">
 
 <header class="site-header" id="top">
   <a class="brand" href="index.html"><img src="images/logo-color.png" width="323" height="145" alt="TK Béton — Beton Engineering"></a>
@@ -42,39 +42,38 @@ var d=document.documentElement;d.lang=l;d.dir=l==='ar'?'rtl':'ltr';}catch(e){}})
 </header>
 
 <main>
-  <section class="hero cat-hero" aria-labelledby="cat-title">
-    <div class="wrap">
-      <p class="kicker mono"><span class="sec-label-n">05</span> <span data-i18n="nav.catalogue">Catalogue</span> — TK Béton · Beton Engineering</p>
-      <div class="hero-grid">
-        <div class="hero-copy">
-          <h1 id="cat-title" data-i18n="cat.title">Le catalogue TK Béton.</h1>
-          <p class="lead" data-i18n="cat.lead"></p>
-          <div class="cta-row">
-            <button class="btn btn-ink" type="button" data-open-page="1"><span data-i18n="cat.open">Feuilleter</span><span class="arrow" aria-hidden="true">→</span></button>
-            <a class="btn btn-line" href="catalogue/catalogue-tk-beton.pdf" download><span data-i18n="cat.download">Télécharger le PDF</span><span class="dl-size">PDF · <span data-i18n="cat.size">8 Mo</span></span></a>
-          </div>
-        </div>
-        <button class="cover" type="button" data-open-page="1" aria-label="Couverture">
-          <img src="catalogue/thumbs/p01.jpg" width="480" height="687" alt="Couverture du catalogue TK Béton">
-          <span class="cover-cap mono"><span data-i18n="cat.pageabbr">p.</span> 01 — <span data-i18n="cat.cover">Couverture</span></span>
-        </button>
+  <section class="cat-top" aria-labelledby="cat-title">
+    <div class="wrap cat-top-row">
+      <div>
+        <h1 id="cat-title" data-i18n="cat.title">Le catalogue TK Béton.</h1>
+        <p class="cat-hint mono"><span class="hint-arrows" aria-hidden="true">← →</span> <span data-i18n="cat.hint">Touchez les flèches ou glissez pour tourner les pages</span></p>
       </div>
+      <a class="btn btn-line" href="catalogue/catalogue-tk-beton.pdf" download><span aria-hidden="true">↓</span> <span data-i18n="cat.download">Télécharger le PDF</span><span class="dl-size">8 MB</span></a>
     </div>
   </section>
 
-  <nav class="chapter-nav mono" aria-label="Chapitres">
-    <div class="wrap chapter-nav-inner">
-      <a href="#ch-intro"><span class="n">01</span><span data-i18n="cat.ch.intro">Présentation</span></a>
-      <a href="#ch-paves"><span class="n">02</span><span data-i18n="cat.ch.paves">Pavés autobloquants</span></a>
-      <a href="#ch-pose"><span class="n">03</span><span data-i18n="cat.ch.pose">Technique de pose</span></a>
-      <a href="#ch-bordures"><span class="n">04</span><span data-i18n="cat.ch.bordures">Bordures & caniveaux</span></a>
-      <a href="#ch-mobilier"><span class="n">05</span><span data-i18n="cat.ch.mobilier">Mobilier urbain</span></a>
-      <a href="#ch-galerie"><span class="n">06</span><span data-i18n="cat.ch.galerie">Galerie & contact</span></a>
+  <!-- Page-turner: one big page, big arrows, swipe, page pictures to jump. Built by js/catalogue.js -->
+  <section class="book" aria-label="Catalogue" aria-roledescription="carousel">
+    <div class="wrap">
+      <div class="book-stage">
+        <button class="book-nav prev" type="button" id="book-prev" aria-label="Page précédente">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4 7 12l8 8"/></svg>
+        </button>
+        <a class="book-page" id="book-link" href="catalogue/pages/p01.jpg" target="_blank" rel="noopener">
+          <img id="book-img" src="catalogue/pages/p01.jpg" width="1654" height="2367" alt="" fetchpriority="high">
+        </a>
+        <button class="book-nav next" type="button" id="book-next" aria-label="Page suivante">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 4 8 8-8 8"/></svg>
+        </button>
+      </div>
+      <div class="book-bar">
+        <p class="book-count" aria-live="polite" dir="ltr"><b id="book-n">1</b> / <span id="book-total">39</span></p>
+        <div class="book-progress" aria-hidden="true"><span id="book-fill"></span></div>
+        <p class="book-title mono" id="book-title"></p>
+      </div>
+      <ol class="book-thumbs" id="book-thumbs" aria-label="Pages"></ol>
     </div>
-  </nav>
-
-  <!-- Chapters are rendered by js/catalogue.js from its page list -->
-  <div id="chapters"></div>
+  </section>
   <noscript><p class="wrap noscript"><a href="catalogue/catalogue-tk-beton.pdf">catalogue-tk-beton.pdf</a></p></noscript>
 
   <section class="sec sec-ink cat-cta" aria-labelledby="cta-title">
@@ -107,21 +106,6 @@ var d=document.documentElement;d.lang=l;d.dir=l==='ar'?'rtl':'ltr';}catch(e){}})
 </footer>
 
 <a class="call-bar mono" href="tel:+212537522534"><span data-i18n="call.now">Appeler</span> <span dir="ltr">05 37 52 25 34</span></a>
-
-<!-- PAGE VIEWER -->
-<div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-labelledby="viewer-title" hidden>
-  <div class="viewer-bar mono">
-    <span class="viewer-count" id="viewer-count" dir="ltr">01 / 39</span>
-    <span class="viewer-title" id="viewer-title"></span>
-    <a class="viewer-dl" href="catalogue/catalogue-tk-beton.pdf" download>PDF ↓</a>
-    <button class="viewer-close" type="button" id="viewer-close" aria-label="Fermer">✕</button>
-  </div>
-  <div class="viewer-stage" id="viewer-stage">
-    <button class="viewer-nav prev" type="button" id="viewer-prev" aria-label="Page précédente"><span aria-hidden="true">←</span></button>
-    <img id="viewer-img" alt="">
-    <button class="viewer-nav next" type="button" id="viewer-next" aria-label="Page suivante"><span aria-hidden="true">→</span></button>
-  </div>
-</div>
 
 <script src="js/i18n.js"></script>
 <script src="js/main.js"></script>

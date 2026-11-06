@@ -1,208 +1,169 @@
-/* Catalogue page: chapter grids of page thumbnails + a full-screen page viewer.
-   Page images are the original catalogue pages (catalogue/pages), thumbnails in catalogue/thumbs.
+/* Catalogue page-turner: one big page at a time, big arrows, swipe, arrow keys,
+   and a strip of page pictures to jump. Kept deliberately simple for every visitor.
    Model names and formats are transcribed from the PDF's spec sheets. */
 (function () {
   'use strict';
   var doc = document;
   var t = window.TK.t;
 
-  /* p = PDF page number; key = translated title; name = model name (never translated); f = format */
+  /* p = PDF page number (blank page 28 is left out); key = translated title; name = model name; f = format */
   var PAGES = [
-    { p: 1, ch: 'intro', key: 'cat.cover' },
-    { p: 2, ch: 'intro', key: 'cat.p.contacts' },
-    { p: 3, ch: 'intro', key: 'cat.p.presentation' },
-    { p: 4, ch: 'intro', key: 'cat.p.why' },
-    { p: 5, ch: 'paves', key: 'cat.ch.paves', divider: true },
-    { p: 6, ch: 'paves', name: 'Agadir', f: '22 × 11 cm' },
-    { p: 7, ch: 'paves', name: 'Chellah', f: '10 × 10 cm' },
-    { p: 8, ch: 'paves', name: 'Cristal', f: '20 × 20 × 10 cm' },
-    { p: 9, ch: 'paves', name: 'Double T', f: '20 × 16 cm' },
-    { p: 10, ch: 'paves', name: 'Fès Rustique', f: '23×14 · 14×14 · 9×14 cm' },
-    { p: 11, ch: 'paves', name: 'Kasbah', f: '18 × 8 × 11,4 cm' },
-    { p: 12, ch: 'paves', name: 'Hallala', f: '13,5 × 13,5 cm' },
-    { p: 13, ch: 'paves', name: 'Kenitra', f: '25 × 12,5 cm' },
-    { p: 14, ch: 'paves', name: 'Lixus', f: '15 × 15 cm' },
-    { p: 15, ch: 'paves', name: 'Mehdia', f: '20 × 10 cm' },
-    { p: 16, ch: 'paves', name: 'Meknès', f: '22,7 × 13,7 cm' },
-    { p: 17, ch: 'paves', name: 'Tanger Med', f: '10 × 20 cm' },
-    { p: 18, ch: 'paves', name: 'TK Port', f: '20 × 20 × 10 cm' },
-    { p: 19, ch: 'paves', name: 'Volubilis', f: '20 × 20 cm' },
-    { p: 20, ch: 'paves', name: 'Bouregreg', f: '20 × 15,5 cm' },
-    { p: 21, ch: 'paves', name: 'Sebou', f: '43 × 43 cm' },
-    { p: 22, ch: 'paves', name: 'Oum Rabie', f: '50 × 50 cm' },
-    { p: 23, ch: 'pose', key: 'cat.ch.pose', divider: true },
-    { p: 24, ch: 'pose', key: 'cat.p.general' },
-    { p: 25, ch: 'pose', key: 'cat.p.pose' },
-    { p: 26, ch: 'pose', key: 'cat.p.pose' },
-    { p: 27, ch: 'pose', key: 'cat.p.pose' },
-    { p: 29, ch: 'bordures', key: 'cat.ch.bordures', divider: true },
-    { p: 30, ch: 'bordures', name: 'Bordure américaine' },
-    { p: 31, ch: 'bordures', name: 'Bordure T1-T2-T3-T4' },
-    { p: 32, ch: 'bordures', name: 'Bordure P1-CR1' },
-    { p: 33, ch: 'bordures', name: 'Trambord' },
-    { p: 34, ch: 'bordures', name: 'Caniveau CC1 & CC2' },
-    { p: 35, ch: 'bordures', name: 'Caniveau CS1 & CS3' },
-    { p: 36, ch: 'mobilier', key: 'cat.p.custom' },
-    { p: 37, ch: 'mobilier', name: 'Bancs' },
-    { p: 38, ch: 'mobilier', name: 'Bornes' },
-    { p: 39, ch: 'galerie', key: 'cat.p.gallery' },
-    { p: 40, ch: 'galerie', key: 'cat.p.back' }
+    { p: 1, key: 'cat.ch.intro' },
+    { p: 2, key: 'cat.p.contacts' },
+    { p: 3, key: 'cat.p.presentation' },
+    { p: 4, key: 'cat.p.why' },
+    { p: 5, key: 'cat.ch.paves' },
+    { p: 6, name: 'Agadir', f: '22 × 11 cm' },
+    { p: 7, name: 'Chellah', f: '10 × 10 cm' },
+    { p: 8, name: 'Cristal', f: '20 × 20 × 10 cm' },
+    { p: 9, name: 'Double T', f: '20 × 16 cm' },
+    { p: 10, name: 'Fès Rustique', f: '23×14 · 14×14 · 9×14 cm' },
+    { p: 11, name: 'Kasbah', f: '18 × 8 × 11,4 cm' },
+    { p: 12, name: 'Hallala', f: '13,5 × 13,5 cm' },
+    { p: 13, name: 'Kenitra', f: '25 × 12,5 cm' },
+    { p: 14, name: 'Lixus', f: '15 × 15 cm' },
+    { p: 15, name: 'Mehdia', f: '20 × 10 cm' },
+    { p: 16, name: 'Meknès', f: '22,7 × 13,7 cm' },
+    { p: 17, name: 'Tanger Med', f: '10 × 20 cm' },
+    { p: 18, name: 'TK Port', f: '20 × 20 × 10 cm' },
+    { p: 19, name: 'Volubilis', f: '20 × 20 cm' },
+    { p: 20, name: 'Bouregreg', f: '20 × 15,5 cm' },
+    { p: 21, name: 'Sebou', f: '43 × 43 cm' },
+    { p: 22, name: 'Oum Rabie', f: '50 × 50 cm' },
+    { p: 23, key: 'cat.ch.pose' },
+    { p: 24, key: 'cat.p.general' },
+    { p: 25, key: 'cat.p.pose' },
+    { p: 26, key: 'cat.p.pose' },
+    { p: 27, key: 'cat.p.pose' },
+    { p: 29, key: 'cat.ch.bordures' },
+    { p: 30, name: 'Bordure américaine' },
+    { p: 31, name: 'Bordure T1-T2-T3-T4' },
+    { p: 32, name: 'Bordure P1-CR1' },
+    { p: 33, name: 'Trambord' },
+    { p: 34, name: 'Caniveau CC1 & CC2' },
+    { p: 35, name: 'Caniveau CS1 & CS3' },
+    { p: 36, key: 'cat.p.custom' },
+    { p: 37, name: 'Bancs' },
+    { p: 38, name: 'Bornes' },
+    { p: 39, key: 'cat.p.gallery' },
+    { p: 40, key: 'cat.p.back' }
   ];
-  var CHAPTERS = ['intro', 'paves', 'pose', 'bordures', 'mobilier', 'galerie'];
+  var SWIPE_PX = 50;
+
+  var img = doc.getElementById('book-img');
+  var link = doc.getElementById('book-link');
+  var prev = doc.getElementById('book-prev');
+  var next = doc.getElementById('book-next');
+  var countN = doc.getElementById('book-n');
+  var fill = doc.getElementById('book-fill');
+  var titleEl = doc.getElementById('book-title');
+  var strip = doc.getElementById('book-thumbs');
+  var index = 0;
 
   function pad(n) { return (n < 10 ? '0' : '') + n; }
   function file(dir, p) { return 'catalogue/' + dir + '/p' + pad(p) + '.jpg'; }
-  function title(pg) { return pg.name || t(pg.key); }
-  function el(tag, cls, text) {
-    var e = doc.createElement(tag);
-    if (cls) { e.className = cls; }
-    if (text) { e.textContent = text; }
-    return e;
-  }
-  function i18nSpan(key) { var s = el('span', null, t(key)); s.setAttribute('data-i18n', key); return s; }
+  function label(pg) { return (pg.name || t(pg.key)) + (pg.f ? ' · ' + pg.f : ''); }
+  function rtl() { return doc.documentElement.dir === 'rtl'; }
 
-  /* ---------- Chapter grids ---------- */
-  function renderCard(pg) {
-    var li = el('li');
-    var btn = el('button', 'page-card');
-    btn.type = 'button';
-    btn.setAttribute('data-open-page', String(pg.p));
-    var img = el('img');
-    img.src = file('thumbs', pg.p); img.width = 480; img.height = 686; img.loading = 'lazy'; img.alt = '';
-    var meta = el('span', 'pc-meta');
-    var num = el('span', 'pc-num mono');
-    num.appendChild(i18nSpan('cat.pageabbr'));
-    num.appendChild(doc.createTextNode(' ' + pad(pg.p)));
-    var name = el('span', 'pc-title');
-    if (pg.name) { name.textContent = pg.name; } else { name.appendChild(i18nSpan(pg.key)); }
-    meta.appendChild(num); meta.appendChild(name);
-    if (pg.f) { meta.appendChild(el('span', 'pc-fmt mono', pg.f)); }
-    btn.appendChild(img); btn.appendChild(meta);
-    li.appendChild(btn);
-    return li;
-  }
-
-  function renderChapters() {
-    var host = doc.getElementById('chapters');
-    CHAPTERS.forEach(function (ch, i) {
-      var pages = PAGES.filter(function (pg) { return pg.ch === ch; });
-      var cards = pages.filter(function (pg) { return !pg.divider; });
-      var sec = el('section', 'sec cat-ch'); sec.id = 'ch-' + ch;
-      var wrap = el('div', 'wrap');
-      var head = el('header', 'sec-head');
-      var label = el('p', 'sec-label mono');
-      label.appendChild(el('span', null, pad(i + 1)));
-      label.appendChild(doc.createTextNode(' '));
-      label.appendChild(i18nSpan('cat.ch.' + ch));
-      var right = el('div');
-      var h2 = el('h2'); h2.appendChild(i18nSpan('cat.ch.' + ch));
-      var range = el('p', 'sec-lead mono');
-      range.appendChild(i18nSpan('cat.pageabbr'));
-      range.appendChild(doc.createTextNode(' ' + pad(pages[0].p) + '–' + pad(pages[pages.length - 1].p)));
-      right.appendChild(h2); right.appendChild(range);
-      head.appendChild(label); head.appendChild(right);
-      var grid = el('ol', 'pages-grid' + (ch === 'paves' ? ' pages-grid-dense' : ''));
-      cards.forEach(function (pg) { grid.appendChild(renderCard(pg)); });
-      wrap.appendChild(head); wrap.appendChild(grid); sec.appendChild(wrap);
-      host.appendChild(sec);
-    });
-  }
-
-  /* ---------- Viewer ---------- */
-  var viewer = doc.getElementById('viewer');
-  var vImg = doc.getElementById('viewer-img');
-  var vCount = doc.getElementById('viewer-count');
-  var vTitle = doc.getElementById('viewer-title');
-  var vPrev = doc.getElementById('viewer-prev');
-  var vNext = doc.getElementById('viewer-next');
-  var vClose = doc.getElementById('viewer-close');
-  var index = 0;
-  var lastFocus = null;
-
-  function preload(i) { if (PAGES[i]) { new Image().src = file('pages', PAGES[i].p); } }
-
-  function show(i) {
-    index = Math.max(0, Math.min(PAGES.length - 1, i));
-    var pg = PAGES[index];
-    vImg.src = file('pages', pg.p);
-    vImg.alt = t('cat.pageabbr') + ' ' + pad(pg.p) + ' — ' + title(pg);
-    vCount.textContent = pad(index + 1) + ' / ' + PAGES.length;
-    vTitle.textContent = t('cat.pageabbr') + ' ' + pad(pg.p) + ' — ' + title(pg) + (pg.f ? ' · ' + pg.f : '');
-    vPrev.disabled = index === 0;
-    vNext.disabled = index === PAGES.length - 1;
-    history.replaceState(null, '', '#page-' + pg.p);
-    preload(index + 1); preload(index - 1);
-  }
-
-  function open(p) {
-    var i = PAGES.findIndex(function (pg) { return pg.p === p; });
-    if (i < 0) { return; }
-    lastFocus = doc.activeElement;
-    viewer.hidden = false;
-    doc.body.style.overflow = 'hidden';
-    show(i);
-    vClose.focus();
-  }
-
-  function close() {
-    if (viewer.hidden) { return; }
-    viewer.hidden = true;
-    doc.body.style.overflow = '';
-    history.replaceState(null, '', location.pathname + location.search);
-    if (lastFocus) { lastFocus.focus(); }
-  }
-
-  function step(d) { show(index + d); }
-  var rtl = function () { return doc.documentElement.dir === 'rtl'; };
-
-  doc.addEventListener('click', function (e) {
-    var trigger = e.target.closest('[data-open-page]');
-    if (trigger) { open(parseInt(trigger.getAttribute('data-open-page'), 10)); }
+  /* ---------- Page pictures strip ---------- */
+  var thumbs = PAGES.map(function (pg, i) {
+    var li = doc.createElement('li');
+    var b = doc.createElement('button');
+    b.type = 'button';
+    b.className = 'book-thumb';
+    var im = doc.createElement('img');
+    im.src = file('thumbs', pg.p); im.width = 480; im.height = 686; im.loading = 'lazy'; im.alt = '';
+    var n = doc.createElement('span');
+    n.className = 'mono';
+    n.textContent = String(i + 1);
+    b.appendChild(im); b.appendChild(n);
+    b.addEventListener('click', function () { go(i); });
+    li.appendChild(b);
+    strip.appendChild(li);
+    return b;
   });
-  vPrev.addEventListener('click', function () { step(-1); });
-  vNext.addEventListener('click', function () { step(1); });
-  vClose.addEventListener('click', close);
-  doc.getElementById('viewer-stage').addEventListener('click', function (e) { if (e.target.id === 'viewer-stage') { close(); } });
+  doc.getElementById('book-total').textContent = String(PAGES.length);
+
+  function centreThumb(b) {
+    /* scroll the strip only, never the page */
+    var target = b.offsetLeft - (strip.clientWidth - b.offsetWidth) / 2;
+    strip.scrollTo({ left: target, behavior: 'smooth' });
+  }
+
+  /* ---------- Turning pages ---------- */
+  function render() {
+    var pg = PAGES[index];
+    img.src = file('pages', pg.p);
+    img.alt = label(pg);
+    link.href = file('pages', pg.p);
+    countN.textContent = String(index + 1);
+    fill.style.width = ((index + 1) / PAGES.length * 100) + '%';
+    titleEl.textContent = label(pg);
+    prev.disabled = index === 0;
+    next.disabled = index === PAGES.length - 1;
+    thumbs.forEach(function (b, i) { b.setAttribute('aria-current', i === index ? 'true' : 'false'); });
+    centreThumb(thumbs[index]);
+    history.replaceState(null, '', '#page-' + pg.p);
+    [index + 1, index - 1].forEach(function (i) { if (PAGES[i]) { new Image().src = file('pages', PAGES[i].p); } });
+  }
+
+  function go(i) {
+    if (i < 0 || i >= PAGES.length || i === index) { return; }
+    var forward = i > index;
+    index = i;
+    img.classList.remove('turn-fwd', 'turn-back');
+    void img.offsetWidth;
+    img.classList.add(forward ? 'turn-fwd' : 'turn-back');
+    render();
+  }
+
+  prev.addEventListener('click', function () { go(index - 1); });
+  next.addEventListener('click', function () { go(index + 1); });
+
   doc.addEventListener('keydown', function (e) {
-    if (viewer.hidden) { return; }
-    if (e.key === 'Escape') { close(); }
-    else if (e.key === 'ArrowRight') { step(rtl() ? -1 : 1); }
-    else if (e.key === 'ArrowLeft') { step(rtl() ? 1 : -1); }
-    else if (e.key === 'Tab') {
-      /* keep focus inside the dialog */
-      var f = Array.prototype.filter.call(viewer.querySelectorAll('a, button'), function (b) { return !b.disabled; });
-      var first = f[0], last = f[f.length - 1];
-      if (e.shiftKey && doc.activeElement === first) { last.focus(); e.preventDefault(); }
-      else if (!e.shiftKey && doc.activeElement === last) { first.focus(); e.preventDefault(); }
+    var tg = e.target;
+    if (tg && tg.closest && tg.closest('input, textarea')) { return; }
+    if (e.key === 'ArrowRight') { go(index + (rtl() ? -1 : 1)); }
+    else if (e.key === 'ArrowLeft') { go(index + (rtl() ? 1 : -1)); }
+  });
+
+  /* Swipe with one finger; pinch-zoom stays free */
+  var sx = null, sy = null, swiped = false;
+  link.addEventListener('touchstart', function (e) {
+    if (e.touches.length !== 1) { sx = null; return; }
+    sx = e.touches[0].clientX; sy = e.touches[0].clientY; swiped = false;
+  }, { passive: true });
+  link.addEventListener('touchend', function (e) {
+    if (sx === null) { return; }
+    var dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy;
+    sx = null;
+    if (Math.abs(dx) > SWIPE_PX && Math.abs(dx) > Math.abs(dy)) {
+      swiped = true;
+      go(index + ((dx < 0) !== rtl() ? 1 : -1));
     }
   });
-
-  /* Swipe on touch screens */
-  var startX = null;
-  vImg.addEventListener('pointerdown', function (e) { startX = e.clientX; });
-  vImg.addEventListener('pointerup', function (e) {
-    if (startX === null) { return; }
-    var dx = e.clientX - startX; startX = null;
-    if (Math.abs(dx) > 50) { step((dx < 0) !== rtl() ? 1 : -1); }
-  });
-  vImg.addEventListener('dragstart', function (e) { e.preventDefault(); });
+  /* a swipe must not also open the full-size page */
+  link.addEventListener('click', function (e) { if (swiped) { e.preventDefault(); swiped = false; } });
 
   function relabel() {
-    vPrev.setAttribute('aria-label', t('cat.prev'));
-    vNext.setAttribute('aria-label', t('cat.next'));
-    vClose.setAttribute('aria-label', t('cat.close'));
-    if (!viewer.hidden) { show(index); }
+    prev.setAttribute('aria-label', t('cat.prev'));
+    next.setAttribute('aria-label', t('cat.next'));
+    titleEl.textContent = label(PAGES[index]);
+    img.alt = label(PAGES[index]);
   }
   doc.addEventListener('tk:lang', relabel);
 
-  renderChapters();
-  relabel();
-
   /* Deep link: catalogue.html#page-18 opens that page */
-  function openFromHash() {
+  function fromHash() {
     var m = /^#page-(\d+)$/.exec(location.hash);
-    if (m && viewer.hidden) { open(parseInt(m[1], 10)); }
+    if (!m) { return -1; }
+    var p = parseInt(m[1], 10);
+    for (var i = 0; i < PAGES.length; i++) { if (PAGES[i].p === p) { return i; } }
+    return -1;
   }
-  window.addEventListener('hashchange', openFromHash);
-  openFromHash();
+  window.addEventListener('hashchange', function () { var i = fromHash(); if (i > -1) { go(i); } });
+  var start = fromHash();
+  index = start > -1 ? start : 0;
+  render();
+  relabel();
 })();
