@@ -274,12 +274,20 @@ html[lang="ar"] .cat-toc-btn { text-transform: none; font-size: .95rem; }
 .toc-list [aria-current="page"] { background: var(--yellow); font-weight: 700; }
 .toc-list [aria-current="page"] .n { color: var(--ink); }
 
-/* The strip of pages: one page wide, snapping, as tall as the current page */
-.cat-viewport { display: flex; align-items: flex-start; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; transition: height .3s var(--ease); border-bottom: var(--rule); }
-.cat-viewport::-webkit-scrollbar { display: none; }
-.cat-viewport.dragging { scroll-snap-type: none; cursor: grabbing; user-select: none; }
-.cat-track { display: contents; }
-.slide { flex: 0 0 100%; width: 100%; scroll-snap-align: start; scroll-snap-stop: always; padding-block: clamp(1.8rem, 4vw, 3.2rem) clamp(2.5rem, 5vw, 4rem); }
+/* Chapter tabs: light up as you scroll */
+.cat-chapters { display: flex; gap: .4rem; overflow-x: auto; scrollbar-width: none; padding-block: 0 .6rem; }
+.cat-chapters::-webkit-scrollbar { display: none; }
+.chip { flex: none; padding: .45rem .75rem; border: var(--rule); background: transparent; white-space: nowrap; transition: background .2s, color .2s; }
+.chip:hover { background: var(--paper-hi); }
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--yellow); }
+html[lang="ar"] .chip { font-size: .9rem; }
+
+/* The catalogue: one section after another, like a normal page */
+.cat-viewport { display: block; }
+.slide { padding-block: clamp(2.2rem, 5vw, 4rem); border-bottom: var(--rule); }
+.slide:last-child { border-bottom: 0; }
+.hint-arrows { animation-name: nudge-down; }
+@keyframes nudge-down { 50% { transform: translateY(3px); } }
 .slide img { width: 100%; height: auto; user-select: none; -webkit-user-drag: none; }
 .slide figure { margin: 0; }
 .slide h3 { font-size: 1.35rem; margin: 0 0 .7rem; }
@@ -467,7 +475,8 @@ html[lang="ar"] .kerb-table thead th { text-transform: none; font-size: .85rem; 
   .cat-top { padding-block: 1.2rem; }
   .cat-top-row { gap: .9rem; }
   .cat-top-row .btn { width: 100%; justify-content: center; }
-  .slide { padding-block: 1.4rem 2.2rem; }
+  .slide { padding-block: 1.8rem 2.4rem; }
+  .cat-chapters { display: none; }
   .sl-head h2 { font-size: clamp(2.2rem, 11vw, 3.2rem); }
   .cover-grid, .text-grid, .contacts, .shared, .two-col, .step, .kerb-pair, .kerb-top, .furniture, .item, .photo-pair, .photo-pair.uneven { grid-template-columns: 1fr; }
   .pv { grid-template-columns: 1fr; grid-template-areas: "head" "render" "details" "photos" "calp"; }

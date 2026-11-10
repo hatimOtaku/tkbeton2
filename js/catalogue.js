@@ -1,6 +1,7 @@
-/* Catalogue: the whole PDF rebuilt as web pages, one "page" per slide.
-   Slides sit side by side in a scroll-snap strip: swipe on touch screens, drag with the mouse,
-   or use the arrows / arrow keys. Content comes from js/catalogue-data.js (FR · EN · AR). */
+/* Catalogue: the whole PDF rebuilt as one long web page, section after section.
+   A smart bar follows the reader: it shows the section on screen, lights up its chapter,
+   and jumps to the previous / next section or any section from the contents list.
+   Content comes from js/catalogue-data.js (FR · EN · AR). */
 (function () {
   'use strict';
   var doc = document;
@@ -8,7 +9,6 @@
   var UI = D.UI, TEXT = D.TEXT;
   var IMG = 'catalogue/img/';
   var PDF = 'catalogue/catalogue-tk-beton.pdf';
-  var SWIPE_PX = 60;
 
   var viewport = doc.getElementById('cat-viewport');
   var track = doc.getElementById('cat-track');
@@ -23,6 +23,7 @@
   var tocBtn = doc.getElementById('cat-toc-btn');
   var toc = doc.getElementById('cat-toc');
   var tocList = doc.getElementById('cat-toc-list');
+  var chaptersEl = doc.getElementById('cat-chapters');
 
   var index = 0;
   var slides = [];
@@ -33,7 +34,11 @@
   function num(s) { return lang() === 'en' ? String(s).replace(/(\d),(\d)/g, '$1.$2') : s; }
   function t(o) { return o[lang()]; }
   function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
-  function img(name, alt, cls) { return '<img src="' + IMG + name + '.jpg" alt="' + esc(alt || '') + '" loading="lazy" decoding="async"' + (cls ? ' class="' + cls + '"' : '') + '>'; }
+  function img(name, alt, cls) {
+    var wh = D.SIZES[name] || [];
+    return '<img src="' + IMG + name + '.jpg" alt="' + esc(alt || '') + '"' + (wh[0] ? ' width="' + wh[0] + '" height="' + wh[1] + '"' : '') +
+      ' loading="lazy" decoding="async"' + (cls ? ' class="' + cls + '"' : '') + '>';
+  }
   function paras(list) { return list.map(function (p) { return '<p>' + p + '</p>'; }).join(''); }
   function dl(rows) {
     return '<dl class="specs">' + rows.map(function (r) { return '<div><dt>' + r[0] + '</dt><dd dir="auto">' + r[1] + '</dd></div>'; }).join('') + '</dl>';
@@ -306,20 +311,27 @@
       return '<article class="slide ' + (s.cls || '') + '" id="' + s.id + '" aria-roledescription="slide" aria-label="' + (i + 1) + ' / ' + SLIDES.length + '"><div class="wrap">' + s.html.call(s) + '</div></article>';
     }).join('');
     slides = Array.prototype.slice.call(track.children);
-    slides.forEach(function (el, i) { el.toggleAttribute('inert', i !== index); });
     track.querySelectorAll('[data-go]').forEach(function (b) {
       b.addEventListener('click', function () { goId(b.getAttribute('data-go')); });
     });
     countT.textContent = String(SLIDES.length);
 
     var chs = Object.keys(UI.chapters);
+    chaptersEl.innerHTML = chs.map(function (c) {
+      return '<button type="button" class="chip mono" data-ch="' + c + '">' + t(UI.chapters[c]) + '</button>';
+    }).join('');
+    chaptersEl.querySelectorAll('[data-ch]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var c = b.getAttribute('data-ch');
+        for (var i = 0; i < SLIDES.length; i++) { if (SLIDES[i].ch === c) { go(i); break; } }
+      });
+    });
     tocList.innerHTML = chs.map(function (c) {
       return '<section><h3 class="mono">' + t(UI.chapters[c]) + '</h3><ol>' + SLIDES.map(function (sl, i) {
         return sl.ch === c ? '<li><button type="button" data-i="' + i + '"><span class="n" dir="ltr">' + pad(i + 1) + '</span><span>' + esc(t(sl.title)) + '</span></button></li>' : '';
       }).join('') + '</ol></section>';
     }).join('');
     status();
-    watchHeight();
   }
   /* Contents: a plain list of every page, grouped by chapter */
   function openToc() {
@@ -337,29 +349,38 @@
     if (b) { closeToc(); go(parseInt(b.getAttribute('data-i'), 10), false); }
   });
 
-  /* ---------- Position ---------- */
-  function width() { return viewport.clientWidth || 1; }
-  function scrollTo(i, smooth) {
-    viewport.scrollTo({ left: (rtl() ? -1 : 1) * i * width(), behavior: smooth ? 'smooth' : 'auto' });
+  /* ---------- Position: the whole catalogue is one long page; the bar follows the section on screen ---------- */
+  function headerH() { var h = doc.querySelector('.site-header'); return h ? h.offsetHeight : 0; }
+  /* height covered at the top of the screen: site header, plus the reader bar where it sticks to the top */
+  function topCover() {
+    var bar = doc.querySelector('.cat-bar');
+    return headerH() + (bar && getComputedStyle(bar).position === 'sticky' ? bar.offsetHeight : 0);
   }
+  var target = -1;
+  function targetY(i) { return Math.max(0, slides[i].getBoundingClientRect().top + window.scrollY - topCover() + 1); }
   function go(i, smooth) {
     if (i < 0 || i >= SLIDES.length) { return; }
-    var changed = i !== index;
+    target = i;
+    anchor = i;
+    lockUntil = Date.now() + (smooth === false ? 0 : 1500);
     setIndex(i);
-    scrollTo(i, smooth !== false);
-    /* bring the top of the new page into view if the reader had scrolled down a long page */
-    var top = reader.getBoundingClientRect().top;
-    if (changed && top < 0) { window.scrollTo({ top: window.scrollY + top - headerH(), behavior: 'smooth' }); }
+    window.scrollTo({ top: targetY(i), behavior: smooth === false ? 'auto' : 'smooth' });
   }
-  function goId(id) { for (var i = 0; i < SLIDES.length; i++) { if (SLIDES[i].id === id) { go(i, true); return; } } }
-  function headerH() { var h = doc.querySelector('.site-header'); return h ? h.offsetHeight : 0; }
+  /* if anything above moved while scrolling, finish exactly on the section asked for */
+  function settle() {
+    if (target < 0) { return; }
+    var i = target;
+    target = -1;
+    if (Math.abs(window.scrollY - targetY(i)) > 4) { window.scrollTo({ top: targetY(i), behavior: 'auto' }); }
+    lockUntil = 0;
+    spy();
+  }
+  function goId(id) { for (var i = 0; i < SLIDES.length; i++) { if (SLIDES[i].id === id) { go(i); return; } } }
 
   function setIndex(i) {
-    if (i === index && slides[i] && !slides[i].hasAttribute('inert')) { return; }
+    if (i === index && countN.textContent === String(i + 1)) { return; }
     index = i;
-    slides.forEach(function (el, n) { el.toggleAttribute('inert', n !== i); });
     status();
-    watchHeight();
     history.replaceState(null, '', '#' + SLIDES[i].id);
   }
   function status() {
@@ -372,28 +393,32 @@
     tocList.querySelectorAll('[data-i]').forEach(function (b) {
       if (b.getAttribute('data-i') === String(index)) { b.setAttribute('aria-current', 'page'); } else { b.removeAttribute('aria-current'); }
     });
+    chaptersEl.querySelectorAll('[data-ch]').forEach(function (b) {
+      var on = b.getAttribute('data-ch') === s.ch;
+      b.setAttribute('aria-pressed', String(on));
+      /* keep the lit chapter visible in the tab strip, without moving the page */
+      if (on) { chaptersEl.scrollTo({ left: b.offsetLeft - (chaptersEl.clientWidth - b.offsetWidth) / 2, behavior: 'smooth' }); }
+    });
   }
 
-  /* The strip is as tall as the current page, so short pages don't leave a gap */
-  var ro = 'ResizeObserver' in window ? new ResizeObserver(fitHeight) : null;
-  function fitHeight() { if (slides[index]) { viewport.style.height = slides[index].offsetHeight + 'px'; } }
-  function watchHeight() {
-    if (ro) { ro.disconnect(); ro.observe(slides[index]); }
-    fitHeight();
+  /* While reading, the current section is the last one whose top has passed under the bar */
+  var lockUntil = 0, ticking = false;
+  function spy() {
+    ticking = false;
+    if (Date.now() < lockUntil || target > -1 || !slides.length) { return; }
+    var line = topCover() + window.innerHeight * 0.25;
+    var cur = 0;
+    for (var i = 0; i < slides.length; i++) {
+      if (slides[i].getBoundingClientRect().top <= line) { cur = i; } else { break; }
+    }
+    if (cur !== index) { setIndex(cur); }
   }
-  window.addEventListener('resize', function () { scrollTo(index, false); fitHeight(); });
-
-  /* Native swipe / trackpad scroll: follow where the strip settles */
-  var settle;
-  viewport.addEventListener('scroll', function () {
-    if (dragging) { return; }
-    clearTimeout(settle);
-    settle = setTimeout(function () {
-      var i = Math.round(Math.abs(viewport.scrollLeft) / width());
-      i = Math.max(0, Math.min(SLIDES.length - 1, i));
-      if (i !== index) { setIndex(i); }
-    }, 90);
+  window.addEventListener('scroll', function () {
+    if (!ticking) { ticking = true; window.requestAnimationFrame(spy); }
   }, { passive: true });
+  var endTimer;
+  window.addEventListener('scroll', function () { clearTimeout(endTimer); endTimer = setTimeout(settle, 160); }, { passive: true });
+  window.addEventListener('scrollend', settle);
 
   prev.addEventListener('click', function () { go(index - 1); });
   next.addEventListener('click', function () { go(index + 1); });
@@ -404,41 +429,21 @@
     else if (e.key === 'ArrowLeft') { e.preventDefault(); go(index + (rtl() ? 1 : -1)); }
   });
 
-  /* Mouse drag: press, drag sideways, let go */
-  var dragging = false, sx = 0, startLeft = 0, moved = false;
-  viewport.addEventListener('pointerdown', function (e) {
-    if (e.pointerType !== 'mouse' || e.button !== 0 || e.target.closest('a, button, select')) { return; }
-    dragging = true; moved = false; sx = e.clientX; startLeft = viewport.scrollLeft;
-  });
-  viewport.addEventListener('pointermove', function (e) {
-    if (!dragging) { return; }
-    var dx = e.clientX - sx;
-    if (!moved && Math.abs(dx) > 6) { moved = true; viewport.classList.add('dragging'); viewport.setPointerCapture(e.pointerId); }
-    if (moved) { viewport.scrollLeft = startLeft - dx; }
-  });
-  function endDrag(e) {
-    if (!dragging) { return; }
-    dragging = false;
-    viewport.classList.remove('dragging');
-    if (!moved) { return; }
-    var dx = e.clientX - sx;
-    var target = index;
-    if (Math.abs(dx) > SWIPE_PX) { target = index + ((dx < 0) !== rtl() ? 1 : -1); }
-    go(Math.max(0, Math.min(SLIDES.length - 1, target)));
-  }
-  viewport.addEventListener('pointerup', endDrag);
-  viewport.addEventListener('pointercancel', endDrag);
-  viewport.addEventListener('click', function (e) { if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; } }, true);
-  viewport.addEventListener('dragstart', function (e) { e.preventDefault(); });
-
-  /* Re-render in the chosen language, keeping the current page */
+  /* Re-render in the chosen language, keeping the current section */
   function relabel() {
     prev.setAttribute('aria-label', window.TK.t('cat.prev'));
     next.setAttribute('aria-label', window.TK.t('cat.next'));
+    var keep = index;
     renderAll();
-    scrollTo(index, false);
+    index = keep;
+    status();
   }
-  doc.addEventListener('tk:lang', relabel);
+  doc.addEventListener('tk:lang', function () {
+    var keep = index;
+    var offset = slides[keep] ? slides[keep].getBoundingClientRect().top : 0;
+    relabel();
+    if (slides[keep]) { window.scrollTo({ top: slides[keep].getBoundingClientRect().top + window.scrollY - offset, behavior: 'auto' }); }
+  });
 
   /* Deep links: catalogue.html#agadir, and old #page-18 links from the PDF viewer */
   function fromHash() {
@@ -449,9 +454,19 @@
     }
     return -1;
   }
-  window.addEventListener('hashchange', function () { var i = fromHash(); if (i > -1 && i !== index) { go(i, true); } });
+  window.addEventListener('hashchange', function () { var i = fromHash(); if (i > -1 && i !== index) { go(i); } });
 
   var start = fromHash();
   index = start > -1 ? start : 0;
   relabel();
+  if (start > 0) { window.requestAnimationFrame(function () { go(start, false); }); }
+
+  /* Web fonts and pictures can finish loading after a jump and push the page.
+     Stay on the section that was asked for, unless the reader has started scrolling by hand. */
+  var anchor = start > 0 ? start : -1;
+  function handScroll() { anchor = -1; }
+  ['wheel', 'touchmove', 'keydown', 'mousedown'].forEach(function (ev) { window.addEventListener(ev, handScroll, { passive: true }); });
+  function reAnchor() { if (anchor > -1 && Math.abs(window.scrollY - targetY(anchor)) > 4) { go(anchor, false); } }
+  window.addEventListener('load', reAnchor);
+  if (doc.fonts && doc.fonts.ready) { doc.fonts.ready.then(reAnchor); }
 })();

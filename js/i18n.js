@@ -58,7 +58,7 @@ window.TK_I18N = {
     "ranges.catalogue": "Voir le catalogue complet",
     "cat.meta": "Catalogue — TK Béton",
     "cat.title": "Le catalogue TK Béton.",
-    "cat.lead": "40 pages : pavés autobloquants, bordures, caniveaux, mobilier urbain et techniques de pose. Parcourez-le ici, page par page, ou téléchargez le PDF.",
+    "cat.lead": "40 pages : pavés autobloquants, bordures, caniveaux, mobilier urbain et techniques de pose. Parcourez-le ici, section par section, ou téléchargez le PDF.",
     "cat.download": "Télécharger le PDF",
     "cat.pageabbr": "p.",
     "cat.ch.intro": "Présentation",
@@ -81,7 +81,7 @@ window.TK_I18N = {
     "cat.cta.title": "Un modèle vous intéresse ?",
     "cat.cta.p": "Indiquez le nom du modèle et la surface dans votre demande de devis.",
     "cat.cta.btn": "Demander un devis",
-    "cat.hint": "Glissez ou utilisez les flèches pour passer d’une page à l’autre",
+    "cat.hint": "Faites défiler pour tout lire, ou utilisez la barre pour sauter d’une section à l’autre",
     "cat.toc": "Sommaire",
     "cat.close": "Fermer"
   },
@@ -142,7 +142,7 @@ window.TK_I18N = {
     "ranges.catalogue": "See the full catalogue",
     "cat.meta": "Catalogue — TK Béton",
     "cat.title": "The TK Béton catalogue.",
-    "cat.lead": "40 pages: interlocking pavers, kerbs, drainage channels, street furniture and laying techniques. Browse it here, page by page, or download the PDF.",
+    "cat.lead": "40 pages: interlocking pavers, kerbs, drainage channels, street furniture and laying techniques. Browse it here, section by section, or download the PDF.",
     "cat.download": "Download the PDF",
     "cat.pageabbr": "p.",
     "cat.ch.intro": "About",
@@ -165,7 +165,7 @@ window.TK_I18N = {
     "cat.cta.title": "Interested in a model?",
     "cat.cta.p": "Mention the model name and the area in your quote request.",
     "cat.cta.btn": "Request a quote",
-    "cat.hint": "Swipe or use the arrows to move from page to page",
+    "cat.hint": "Scroll to read it all, or use the bar to jump between sections",
     "cat.toc": "Contents",
     "cat.close": "Close"
   },
@@ -249,7 +249,7 @@ window.TK_I18N = {
     "cat.cta.title": "هل يهمّكم نموذج ما؟",
     "cat.cta.p": "اذكروا اسم النموذج والمساحة في طلب عرض السعر.",
     "cat.cta.btn": "اطلب عرض سعر",
-    "cat.hint": "اسحبوا أو استعملوا الأسهم للانتقال بين الصفحات",
+    "cat.hint": "مرّروا لقراءة كل شيء، أو استعملوا الشريط للانتقال بين الأقسام",
     "cat.toc": "الفهرس",
     "cat.close": "إغلاق"
   }
