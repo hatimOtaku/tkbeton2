@@ -46,32 +46,35 @@ var d=document.documentElement;d.lang=l;d.dir=l==='ar'?'rtl':'ltr';}catch(e){}})
     <div class="wrap cat-top-row">
       <div>
         <h1 id="cat-title" data-i18n="cat.title">Le catalogue TK Béton.</h1>
-        <p class="cat-hint mono"><span class="hint-arrows" aria-hidden="true">← →</span> <span data-i18n="cat.hint">Touchez les flèches ou glissez pour tourner les pages</span></p>
+        <p class="cat-hint mono"><span class="hint-arrows" aria-hidden="true">← →</span> <span data-i18n="cat.hint">Glissez ou utilisez les flèches pour passer d’une page à l’autre</span></p>
       </div>
       <a class="btn btn-line" href="catalogue/catalogue-tk-beton.pdf" download><span aria-hidden="true">↓</span> <span data-i18n="cat.download">Télécharger le PDF</span><span class="dl-size">8 MB</span></a>
     </div>
   </section>
 
-  <!-- Page-turner: one big page, big arrows, swipe, page pictures to jump. Built by js/catalogue.js -->
-  <section class="book" aria-label="Catalogue" aria-roledescription="carousel">
-    <div class="wrap">
-      <div class="book-stage">
-        <button class="book-nav prev" type="button" id="book-prev" aria-label="Page précédente">
+  <!-- The catalogue itself, rebuilt as web pages: swipe, drag or use the arrows. Built by js/catalogue.js from js/catalogue-data.js -->
+  <section class="cat-reader" id="cat-reader" aria-label="Catalogue" aria-roledescription="carousel">
+    <div class="cat-bar">
+      <div class="wrap cat-bar-row">
+        <button class="cat-nav prev" type="button" id="cat-prev" aria-label="Page précédente">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4 7 12l8 8"/></svg>
         </button>
-        <a class="book-page" id="book-link" href="catalogue/pages/p01.jpg" target="_blank" rel="noopener">
-          <img id="book-img" src="catalogue/pages/p01.jpg" width="1654" height="2367" alt="" fetchpriority="high">
-        </a>
-        <button class="book-nav next" type="button" id="book-next" aria-label="Page suivante">
+        <div class="cat-status">
+          <p class="cat-count" aria-live="polite" dir="ltr"><b id="cat-n">1</b> / <span id="cat-total">38</span></p>
+          <div class="cat-progress" aria-hidden="true"><span id="cat-fill"></span></div>
+          <p class="cat-now mono" id="cat-now"></p>
+        </div>
+        <button class="cat-nav next" type="button" id="cat-next" aria-label="Page suivante">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 4 8 8-8 8"/></svg>
         </button>
       </div>
-      <div class="book-bar">
-        <p class="book-count" aria-live="polite" dir="ltr"><b id="book-n">1</b> / <span id="book-total">39</span></p>
-        <div class="book-progress" aria-hidden="true"><span id="book-fill"></span></div>
-        <p class="book-title mono" id="book-title"></p>
+      <div class="wrap cat-tools">
+        <nav class="cat-chapters" id="cat-chapters" aria-label="Chapitres"></nav>
+        <select class="cat-jump mono" id="cat-jump" aria-label="Sommaire"></select>
       </div>
-      <ol class="book-thumbs" id="book-thumbs" aria-label="Pages"></ol>
+    </div>
+    <div class="cat-viewport" id="cat-viewport">
+      <div class="cat-track" id="cat-track"></div>
     </div>
   </section>
   <noscript><p class="wrap noscript"><a href="catalogue/catalogue-tk-beton.pdf">catalogue-tk-beton.pdf</a></p></noscript>
@@ -109,6 +112,7 @@ var d=document.documentElement;d.lang=l;d.dir=l==='ar'?'rtl':'ltr';}catch(e){}})
 
 <script src="js/i18n.js"></script>
 <script src="js/main.js"></script>
+<script src="js/catalogue-data.js"></script>
 <script src="js/catalogue.js"></script>
 </body>
 </html>
