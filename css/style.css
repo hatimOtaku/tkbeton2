@@ -289,6 +289,10 @@ html[lang="ar"] .chip { font-size: .9rem; }
 .hint-arrows { animation-name: nudge-down; }
 @keyframes nudge-down { 50% { transform: translateY(3px); } }
 .slide img { width: 100%; height: auto; user-select: none; -webkit-user-drag: none; }
+.slide picture { display: contents; }
+/* Sections off screen are not drawn until needed: keeps the long page light on phones */
+.slide { content-visibility: auto; contain-intrinsic-size: auto 1600px; }
+.specs dd { overflow-wrap: anywhere; min-width: 0; }
 .slide figure { margin: 0; }
 .slide h3 { font-size: 1.35rem; margin: 0 0 .7rem; }
 .slide h3.mono { font: 500 .78rem var(--mono); text-transform: uppercase; letter-spacing: .04em; color: var(--ink-2); margin: 1.6rem 0 .6rem; }
@@ -311,6 +315,25 @@ html[lang="ar"] .slide h3.mono { font-size: .9rem; text-transform: none; letter-
 .cover-words li { border: 1px solid var(--yellow); color: var(--yellow); padding: .35rem .7rem; }
 .cover-hint { color: rgba(242,240,235,.7); margin: 0; }
 .cover-fig { border: 1px solid rgba(242,240,235,.25); line-height: 0; }
+.cover-grid { grid-template-columns: 7fr 4fr; }
+.cover-go { margin: 1.6rem 0 .7rem; color: rgba(242,240,235,.7); }
+.cover-jumps { display: flex; flex-wrap: wrap; gap: .6rem; }
+.cover-jumps .btn { padding: .8rem 1rem; }
+.cover-jumps .btn:hover { background: var(--paper-hi); border-color: var(--paper-hi); color: var(--ink); }
+.cover-fig img { max-height: 26rem; object-fit: cover; }
+
+/* About: two short columns instead of two long pages */
+.about { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1.5rem, 4vw, 3.5rem); align-items: start; }
+.about .sl-head { margin-bottom: 1rem; }
+.about-lead { font-size: 1.15rem; margin: 0 0 1rem; max-width: 52ch; }
+.ticks { list-style: none; margin: 0; padding: 0; }
+.ticks li { position: relative; padding: .55rem 0 .55rem 1.6rem; border-top: 1px solid rgba(18,18,18,.18); max-width: 60ch; }
+[dir="rtl"] .ticks li { padding: .55rem 1.6rem .55rem 0; }
+.ticks li::before { content: ""; position: absolute; inset-inline-start: 0; top: 1rem; width: .7rem; height: .7rem; background: var(--yellow); border: 1px solid var(--ink); }
+.about h3 { margin-top: .2rem; }
+.about-fig { margin-top: 1rem !important; border: var(--rule); line-height: 0; }
+.about-fig img { max-height: 11rem; object-fit: cover; }
+.sl-end > .wrap > h3 { margin-top: 2rem; }
 
 /* Contacts */
 .contacts { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
@@ -456,7 +479,7 @@ html[lang="ar"] .kerb-table thead th { text-transform: none; font-size: .85rem; 
   /* Phone: the reader bar moves to the bottom of the screen, in reach of the thumb */
   .cat-bar { position: fixed; top: auto; inset-inline: 0; bottom: 0; z-index: 60; border-top: 2px solid var(--ink); border-bottom: 0; padding-bottom: env(safe-area-inset-bottom); }
   .cat-bar .wrap { width: 100%; }
-  .cat-bar-row { grid-template-columns: 4.2rem 1fr 4.2rem; gap: 0; padding: 0; }
+  .cat-bar-row { grid-template-columns: 4.2rem minmax(0, 1fr) 4.2rem; gap: 0; padding: 0; }
   .cat-nav { width: 4.2rem; height: 4rem; border-width: 0; }
   .cat-nav.prev { border-inline-end: 2px solid var(--ink); }
   .cat-nav.next { border-inline-start: 2px solid var(--ink); }
@@ -478,6 +501,12 @@ html[lang="ar"] .kerb-table thead th { text-transform: none; font-size: .85rem; 
   .slide { padding-block: 1.8rem 2.4rem; }
   .cat-chapters { display: none; }
   .sl-head h2 { font-size: clamp(2.2rem, 11vw, 3.2rem); }
+  .cover-fig { display: none; }
+  .cover-title { font-size: clamp(1.7rem, 7.5vw, 2.3rem); }
+  .cover-words { margin: 1rem 0; }
+  .cover-jumps { display: grid; grid-template-columns: 1fr 1fr; }
+  .cover-jumps .btn { justify-content: space-between; font-size: .85rem; }
+  .about,
   .cover-grid, .text-grid, .contacts, .shared, .two-col, .step, .kerb-pair, .kerb-top, .furniture, .item, .photo-pair, .photo-pair.uneven { grid-template-columns: 1fr; }
   .pv { grid-template-columns: 1fr; grid-template-areas: "head" "render" "details" "photos" "calp"; }
   .render, [dir="rtl"] .render { box-shadow: 6px 6px 0 var(--yellow); }
@@ -500,3 +529,12 @@ html[lang="ar"] .kerb-table thead th { text-transform: none; font-size: .85rem; 
 /* Yellow button on the light hero: ink outline, inverts to ink on hover */
 .hero .btn-yellow { border-color: var(--ink); }
 .hero .btn-yellow:hover { background: var(--ink); color: var(--yellow); border-color: var(--ink); }
+
+/* Very narrow phones (320–360 px) */
+@media (max-width: 360px) {
+  .cat-bar-row { grid-template-columns: 3.4rem minmax(0, 1fr) 3.4rem; }
+  .cat-nav { width: 3.4rem; }
+  .cat-count { font-size: 1.15rem; }
+  .cat-now { font-size: .75rem; }
+  .specs > div { grid-template-columns: 1fr; gap: .1rem; }
+}

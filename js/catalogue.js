@@ -34,10 +34,12 @@
   function num(s) { return lang() === 'en' ? String(s).replace(/(\d),(\d)/g, '$1.$2') : s; }
   function t(o) { return o[lang()]; }
   function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+  /* Phones get a lighter copy of each picture (catalogue/img/sm/), which keeps the long page within their memory */
   function img(name, alt, cls) {
     var wh = D.SIZES[name] || [];
-    return '<img src="' + IMG + name + '.jpg" alt="' + esc(alt || '') + '"' + (wh[0] ? ' width="' + wh[0] + '" height="' + wh[1] + '"' : '') +
-      ' loading="lazy" decoding="async"' + (cls ? ' class="' + cls + '"' : '') + '>';
+    return '<picture><source media="(max-width: 700px)" srcset="' + IMG + 'sm/' + name + '.jpg">' +
+      '<img src="' + IMG + name + '.jpg" alt="' + esc(alt || '') + '"' + (wh[0] ? ' width="' + wh[0] + '" height="' + wh[1] + '"' : '') +
+      ' loading="lazy" decoding="async"' + (cls ? ' class="' + cls + '"' : '') + '></picture>';
   }
   function paras(list) { return list.map(function (p) { return '<p>' + p + '</p>'; }).join(''); }
   function dl(rows) {
@@ -88,37 +90,24 @@
     var S = [];
     var U = D.UI;
 
-    /* 01 · Cover */
+    /* 01 · Cover: what TK Béton makes, and shortcuts straight to the products */
     S.push({ id: 'couverture', ch: 'intro', title: L3('Couverture', 'Cover', 'الغلاف'), pages: [1], cls: 'sl-cover', html: function () {
+      var jumps = [['paves', TEXT.pavesTitle], ['bordures', UI.chapters.bordures], ['mobilier', UI.chapters.mobilier], ['pose', UI.chapters.pose]];
       return '<div class="cover-grid"><div><p class="mono sl-kicker">' + t(TEXT.coverKicker) + '</p>' +
-        '<img class="cover-logo" src="images/logo-color.png" width="323" height="145" alt="TK Béton — Beton Engineering">' +
         '<h1 class="cover-title">' + t(TEXT.coverTitle) + '</h1>' +
-        '<ul class="cover-words mono">' + t(TEXT.coverWords).map(function (w) { return '<li>' + w + '</li>'; }).join('') + '</ul>' +
-        '<p class="cover-hint">' + t(TEXT.coverHint) + '</p></div>' +
+        '<p class="mono cover-go">' + t(TEXT.coverGo) + '</p><div class="cover-jumps">' + jumps.map(function (j) {
+          return '<button type="button" class="btn btn-yellow" data-go="' + j[0] + '">' + t(j[1]) + ' <span class="arrow" aria-hidden="true">→</span></button>';
+        }).join('') + '</div>' +
+        '<ul class="cover-words mono">' + t(TEXT.coverWords).map(function (w) { return '<li>' + w + '</li>'; }).join('') + '</ul></div>' +
         '<figure class="cover-fig">' + img('cover', '') + '</figure></div>';
     } });
 
-    /* 02 · Contacts */
-    S.push({ id: 'contacts', ch: 'intro', title: TEXT.contactsTitle, pages: [2], html: function () {
-      return head('TK Béton', t(TEXT.contactsTitle)) + '<div class="contacts">' + ['usine', 'siege'].map(function (k) {
-        var c = D.CONTACTS[k];
-        var rows = [[t(U.tel), c.tel.map(telLink).join('<br>')], [t(U.fax), '<span dir="ltr">' + c.fax + '</span>']];
-        if (c.gsm.length) { rows.push([t(U.gsm), c.gsm.map(telLink).join('<br>')]); }
-        rows.push([t(U.email), '<a href="mailto:' + c.email + '" dir="ltr">' + c.email + '</a>']);
-        return '<article class="contact-card"><h3>' + t(U[k]) + '</h3><p>' + c.addr + '</p>' + dl(rows) + '</article>';
-      }).join('') + '</div>';
-    } });
-
-    /* 03 · Presentation */
-    S.push({ id: 'presentation', ch: 'intro', title: TEXT.presTitle, pages: [3], html: function () {
-      return '<figure class="banner">' + img('presentation', 'TK Béton — ' + t(U.groupe)) + '</figure>' +
-        '<div class="text-grid">' + head(t(U.groupe), t(TEXT.presTitle)) + '<div class="prose">' + paras(t(TEXT.pres)) + '</div></div>';
-    } });
-
-    /* 04 · Why pavers */
-    S.push({ id: 'pourquoi', ch: 'intro', title: TEXT.whyTitle, pages: [4], html: function () {
-      return '<div class="text-grid">' + head(t(UI.chapters.intro), t(TEXT.whyTitle)) + '<div class="prose">' + paras(t(TEXT.why)) + '</div></div>' +
-        '<figure class="banner">' + img('why', '') + '</figure>';
+    /* 02 · About us + why pavers, as short points (PDF pages 3 and 4) */
+    S.push({ id: 'a-propos', ch: 'intro', title: TEXT.aboutTitle, pages: [3, 4], html: function () {
+      return '<div class="about">' +
+        '<section>' + head(t(U.groupe), t(TEXT.aboutTitle)) + '<p class="about-lead">' + t(TEXT.aboutLead) + '</p><ul class="ticks">' + li(t(TEXT.aboutPoints)) + '</ul></section>' +
+        '<section><h3>' + t(TEXT.whyTitle) + '</h3><ul class="ticks">' + li(t(TEXT.whyPoints)) + '</ul>' +
+        '<figure class="about-fig">' + img('why', '') + '</figure></section></div>';
     } });
 
     /* 05 · Pavers chapter: index of the 17 models + what they all share */
@@ -267,11 +256,18 @@
     } });
 
     /* 38 · Back cover */
-    S.push({ id: 'contact', ch: 'fin', title: TEXT.endTitle, pages: [28, 40], cls: 'sl-end', html: function () {
+    S.push({ id: 'contact', ch: 'fin', title: TEXT.endTitle, pages: [2, 28, 40], cls: 'sl-end', html: function () {
       return '<div class="chapter-band"><p class="mono">TK Béton</p><h2>' + t(TEXT.endTitle) + '</h2><p>' + t(TEXT.end) + '</p>' +
         '<div class="cta-row"><a class="btn btn-ink" href="' + PDF + '" download><span aria-hidden="true">↓</span> ' + t(U.download) + '</a>' +
         '<a class="btn btn-line" href="index.html#contact">' + t(U.quote) + ' <span class="arrow" aria-hidden="true">→</span></a>' +
-        '<a class="btn btn-line" href="tel:+212537522534" dir="ltr">05 37 52 25 34</a></div></div>';
+        '<a class="btn btn-line" href="tel:+212537522534" dir="ltr">05 37 52 25 34</a></div></div>' +
+        '<h3>' + t(TEXT.contactsTitle) + '</h3><div class="contacts">' + ['usine', 'siege'].map(function (k) {
+          var c = D.CONTACTS[k];
+          var rows = [[t(U.tel), c.tel.map(telLink).join('<br>')], [t(U.fax), '<span dir="ltr">' + c.fax + '</span>']];
+          if (c.gsm.length) { rows.push([t(U.gsm), c.gsm.map(telLink).join('<br>')]); }
+          rows.push([t(U.email), '<a href="mailto:' + c.email + '" dir="ltr">' + c.email + '</a>']);
+          return '<article class="contact-card"><h3>' + t(U[k]) + '</h3><p>' + c.addr + '</p>' + dl(rows) + '</article>';
+        }).join('') + '</div>';
     } });
 
     return S;
@@ -358,22 +354,40 @@
   }
   var target = -1;
   function targetY(i) { return Math.max(0, slides[i].getBoundingClientRect().top + window.scrollY - topCover() + 1); }
+  /* jump without animation, even though the site turns on smooth scrolling for the whole page */
+  function jumpTo(y) {
+    var root = doc.documentElement;
+    root.style.scrollBehavior = 'auto';
+    window.scrollTo(0, y);
+    root.style.scrollBehavior = '';
+  }
   function go(i, smooth) {
     if (i < 0 || i >= SLIDES.length) { return; }
     target = i;
     anchor = i;
-    lockUntil = Date.now() + (smooth === false ? 0 : 1500);
     setIndex(i);
-    window.scrollTo({ top: targetY(i), behavior: smooth === false ? 'auto' : 'smooth' });
+    var y = targetY(i);
+    /* only a short hop animates; long jumps (contents, chapters, links) land at once */
+    if (smooth !== false && Math.abs(y - window.scrollY) < window.innerHeight * 2.5) {
+      lockUntil = Date.now() + 1500;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    } else {
+      lockUntil = Date.now() + 400;
+      jumpTo(y);
+      settle();
+    }
   }
   /* if anything above moved while scrolling, finish exactly on the section asked for */
   function settle() {
     if (target < 0) { return; }
     var i = target;
     target = -1;
-    if (Math.abs(window.scrollY - targetY(i)) > 4) { window.scrollTo({ top: targetY(i), behavior: 'auto' }); }
-    lockUntil = 0;
-    spy();
+    var tries = 0, still = 0;
+    (function fix() {
+      if (Math.abs(window.scrollY - targetY(i)) > 4) { jumpTo(targetY(i)); still = 0; } else { still++; }
+      if (still < 3 && ++tries < 15) { setTimeout(fix, 70); }
+      else { lockUntil = 0; spy(); }
+    })();
   }
   function goId(id) { for (var i = 0; i < SLIDES.length; i++) { if (SLIDES[i].id === id) { go(i); return; } } }
 
@@ -442,12 +456,13 @@
     var keep = index;
     var offset = slides[keep] ? slides[keep].getBoundingClientRect().top : 0;
     relabel();
-    if (slides[keep]) { window.scrollTo({ top: slides[keep].getBoundingClientRect().top + window.scrollY - offset, behavior: 'auto' }); }
+    if (slides[keep]) { jumpTo(slides[keep].getBoundingClientRect().top + window.scrollY - offset); }
   });
 
   /* Deep links: catalogue.html#agadir, and old #page-18 links from the PDF viewer */
   function fromHash() {
     var h = location.hash.slice(1);
+    h = { contacts: 'contact', presentation: 'a-propos', pourquoi: 'a-propos' }[h] || h;
     var m = /^page-(\d+)$/.exec(h);
     for (var i = 0; i < SLIDES.length; i++) {
       if (m ? SLIDES[i].pages.indexOf(parseInt(m[1], 10)) > -1 : SLIDES[i].id === h) { return i; }

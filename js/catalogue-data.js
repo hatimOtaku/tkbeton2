@@ -133,45 +133,42 @@
     coverKicker: L('Beton Engineering · Groupe BES', 'Beton Engineering · BES Group', 'Beton Engineering · مجموعة BES'),
     coverTitle: L('Fabrication des produits en béton préfabriqué pour l’aménagement d’extérieur.', 'Precast concrete products for outdoor landscaping.', 'تصنيع منتجات الخرسانة الجاهزة لتهيئة الفضاءات الخارجية.'),
     coverWords: L(['Formes', 'Couleurs', 'Design', 'Qualité', 'Tendances'], ['Shapes', 'Colours', 'Design', 'Quality', 'Trends'], ['الأشكال', 'الألوان', 'التصميم', 'الجودة', 'التوجهات']),
-    coverHint: L('Glissez ou utilisez les flèches pour parcourir le catalogue.', 'Swipe or use the arrows to browse the catalogue.', 'اسحبوا أو استعملوا الأسهم لتصفح الكتالوج.'),
     contactsTitle: L('Contacts', 'Contacts', 'جهات الاتصال'),
-    presTitle: L('Présentation', 'About us', 'تقديم'),
-    pres: L([
-      '<b>TK BÉTON</b>, le leader des fabricants de produits en béton préfabriqué pour l’aménagement d’extérieur.',
-      'Nos produits répondent aux exigences de qualité selon les normes nationales et européennes.',
-      'À côté des produits fabriqués en série, nous répondons aux besoins spécifiques des architectes et bureaux d’études pour des réalisations sur mesure.',
-      'Notre équipe s’appuie sur un savoir-faire de plus de 25 ans dans l’industrie du béton.',
-      'Nos matières premières sont soigneusement sélectionnées auprès de fournisseurs qui élaborent leurs produits par des procédés de fabrication conformes à un cahier des charges rigoureux.',
-      '<b>TK BÉTON</b> conçoit et fabrique ses produits (pavés, bordures, caniveaux, mobilier urbain…) dans le cadre d’une démarche de qualité totale.'
+    coverGo: L('Aller directement aux produits :', 'Go straight to the products:', 'انتقلوا مباشرة إلى المنتجات:'),
+    aboutTitle: L('Qui sommes-nous', 'About us', 'من نحن'),
+    aboutLead: L('<b>TK BÉTON</b> est le leader des fabricants de produits en béton préfabriqué pour l’aménagement d’extérieur, avec plus de 25 ans de savoir-faire.',
+      '<b>TK BÉTON</b> is the leading maker of precast concrete products for outdoor landscaping, with more than 25 years of know-how.',
+      '<b>تي كي بيتون</b> رائدة في تصنيع منتجات الخرسانة الجاهزة لتهيئة الفضاءات الخارجية، بخبرة تفوق 25 سنة.'),
+    aboutPoints: L([
+      'Pavés, bordures, caniveaux, mobilier urbain…, conçus et fabriqués dans une démarche de qualité totale.',
+      'Qualité conforme aux normes nationales et européennes.',
+      'Produits de série, et réalisations sur mesure pour architectes et bureaux d’études.',
+      'Matières premières choisies chez des fournisseurs qui suivent un cahier des charges rigoureux.'
     ], [
-      '<b>TK BÉTON</b>, the leading manufacturer of precast concrete products for outdoor landscaping.',
-      'Our products meet the quality requirements of national and European standards.',
-      'Alongside our standard ranges, we meet the specific needs of architects and engineering firms with made-to-measure work.',
-      'Our team draws on more than 25 years of know-how in the concrete industry.',
-      'Our raw materials are carefully selected from suppliers whose manufacturing processes follow strict specifications.',
-      '<b>TK BÉTON</b> designs and manufactures its products (pavers, kerbs, channels, street furniture…) within a total quality approach.'
+      'Pavers, kerbs, channels, street furniture…, designed and made within a total quality approach.',
+      'Quality that meets national and European standards.',
+      'Standard ranges, plus made-to-measure work for architects and engineering firms.',
+      'Raw materials sourced from suppliers who follow strict specifications.'
     ], [
-      '<b>تي كي بيتون</b>، رائدة في تصنيع منتجات الخرسانة الجاهزة لتهيئة الفضاءات الخارجية.',
-      'تستجيب منتجاتنا لمتطلبات الجودة وفق المعايير الوطنية والأوروبية.',
-      'إلى جانب المنتجات المصنّعة بالجملة، نلبّي الاحتياجات الخاصة للمهندسين المعماريين ومكاتب الدراسات بإنجازات حسب الطلب.',
-      'يعتمد فريقنا على خبرة تفوق 25 سنة في صناعة الخرسانة.',
-      'نختار موادنا الأولية بعناية لدى موردين يصنعون منتجاتهم وفق دفتر تحملات صارم.',
-      'تصمم <b>تي كي بيتون</b> وتصنع منتجاتها (بلاطات، أرصفة، قنوات تصريف، أثاث حضري…) في إطار مقاربة الجودة الشاملة.'
+      'بلاطات، أرصفة، قنوات تصريف، أثاث حضري…، مصممة ومصنّعة في إطار مقاربة الجودة الشاملة.',
+      'جودة مطابقة للمعايير الوطنية والأوروبية.',
+      'منتجات قياسية، وإنجازات حسب الطلب للمهندسين المعماريين ومكاتب الدراسات.',
+      'مواد أولية مختارة لدى موردين يلتزمون بدفتر تحملات صارم.'
+    ]),
+    whyPoints: L([
+      'Durables, économiques et écologiques (sol drainant), avec un grand choix de designs et de couleurs.',
+      'Démontables et remontables : idéal en ville pour les travaux de réseaux (assainissement, câblage électrique…).',
+      'Pour chaussées, rues piétonnes, esplanades, allées de jardin, parkings, aires de stockage industrielles, terminaux portuaires et talus de piles de ponts, en trafic léger ou lourd.'
+    ], [
+      'Durable, economical and ecological (draining ground), with a wide choice of designs and colours.',
+      'Can be lifted and relaid: ideal in towns for network works (sewerage, electrical cabling…).',
+      'For roads, pedestrian streets, squares, garden paths, car parks, industrial storage yards, port terminals and bridge-pier embankments, for light or heavy traffic.'
+    ], [
+      'متينة واقتصادية وصديقة للبيئة (أرضية مُصرِّفة للماء)، مع تشكيلة واسعة من التصاميم والألوان.',
+      'قابلة للفك وإعادة التركيب: مثالية في المدن لأشغال الشبكات (التطهير، الكابلات الكهربائية…).',
+      'للطرق، والشوارع المخصصة للراجلين، والساحات، وممرات الحدائق، ومواقف السيارات، ومناطق التخزين الصناعي، والمحطات المينائية، ومنحدرات دعامات الجسور، لحركة مرور خفيفة أو كثيفة.'
     ]),
     whyTitle: L('Pourquoi le choix des pavés ?', 'Why choose pavers?', 'لماذا اختيار البلاطات؟'),
-    why: L([
-      'Le pavé autobloquant en béton est une solution de référence pour le revêtement des zones extérieures. Les raisons sont multiples : la durabilité, un grand choix de designs et de couleurs, l’écologie (sol drainant), un coût économique…',
-      'Pouvoir les démonter et les remonter est précieux en milieu urbain, où il faut régulièrement étendre les réseaux : assainissement, câblage électrique et autres travaux.',
-      'Les pavés en béton s’utilisent pour les chaussées, rues piétonnes, esplanades, allées de jardin, parkings, aires de stockage industrielles, terminaux portuaires, talus des piles de ponts et tout autre usage à trafic léger ou lourd.'
-    ], [
-      'Interlocking concrete pavers are a benchmark solution for outdoor surfaces, for many reasons: durability, a wide choice of designs and colours, ecology (draining ground) and cost…',
-      'Being able to lift and relay them is valuable in towns, where networks are constantly extended: sewerage, electrical cabling and other works.',
-      'Concrete pavers are used for roads, pedestrian streets, squares, garden paths, car parks, industrial storage yards, port terminals, bridge-pier embankments and any other light or heavy traffic use.'
-    ], [
-      'تُعد البلاطات المتشابكة من الخرسانة حلاً مرجعياً لتكسية الفضاءات الخارجية، والأسباب متعددة: المتانة، وتنوع التصاميم والألوان، والجانب البيئي (أرضية مُصرِّفة للماء)، والتكلفة الاقتصادية…',
-      'إمكانية فكها وإعادة تركيبها ميزة ثمينة في المدن، حيث يجب توسيع الشبكات باستمرار: التطهير، والكابلات الكهربائية وأشغال أخرى.',
-      'تُستعمل البلاطات الخرسانية في الطرق، والشوارع المخصصة للراجلين، والساحات، وممرات الحدائق، ومواقف السيارات، ومناطق التخزين الصناعي، والمحطات المينائية، ومنحدرات دعامات الجسور، وكل استعمال بحركة مرور خفيفة أو كثيفة.'
-    ]),
     pavesTitle: L('Pavés autobloquants', 'Interlocking pavers', 'البلاطات المتشابكة'),
     pavesLead: L('Tous nos pavés sont fabriqués en double couche selon la norme EN 1338, en 9 coloris et 2 finitions.', 'All our pavers are made in two layers to EN 1338, in 9 colours and 2 finishes.', 'تُصنع جميع بلاطاتنا من طبقتين وفق المعيار EN 1338، بـ 9 ألوان وتشطيبين.'),
     poseTitle: L('Technique de pose (pavés)', 'Laying technique (pavers)', 'تقنية تركيب البلاطات'),
