@@ -19,8 +19,10 @@
   var countT = doc.getElementById('cat-total');
   var fill = doc.getElementById('cat-fill');
   var nowEl = doc.getElementById('cat-now');
-  var chaptersEl = doc.getElementById('cat-chapters');
-  var jump = doc.getElementById('cat-jump');
+  var openBtn = doc.getElementById('cat-open');
+  var tocBtn = doc.getElementById('cat-toc-btn');
+  var toc = doc.getElementById('cat-toc');
+  var tocList = doc.getElementById('cat-toc-list');
 
   var index = 0;
   var slides = [];
@@ -70,7 +72,10 @@
   function tolerances() {
     return '<div class="tol"><table><thead><tr><th colspan="2">' + t(UI.tol) + '</th><th colspan="3">' + t(UI.mech) + '</th></tr>' +
       '<tr><td>' + t(UI.lw) + '</td><td>' + t(UI.thick) + '</td><td>' + t(UI.absorb) + '</td><td>' + t(UI.split) + '</td><td>' + t(UI.abrasion) + '</td></tr></thead>' +
-      '<tbody><tr><td dir="ltr">± 2 mm</td><td dir="ltr">± 3 mm</td><td>' + t(UI.absorbVal) + '</td><td dir="ltr">≥ ' + num('3,6') + ' MPa</td><td dir="ltr">&lt; 23 mm</td></tr></tbody></table></div>';
+      '<tbody><tr><td dir="ltr">± 2 mm</td><td dir="ltr">± 3 mm</td><td>' + t(UI.absorbVal) + '</td><td dir="ltr">≥ ' + num('3,6') + ' MPa</td><td dir="ltr">&lt; 23 mm</td></tr></tbody></table>' +
+      '<div class="tol-list"><h3 class="mono">' + t(UI.tol) + ' · ' + t(UI.mech) + '</h3>' + dl([
+        [t(UI.lw), '<span dir="ltr">± 2 mm</span>'], [t(UI.thick), '<span dir="ltr">± 3 mm</span>'], [t(UI.absorb), t(UI.absorbVal)],
+        [t(UI.split), '<span dir="ltr">≥ ' + num('3,6') + ' MPa</span>'], [t(UI.abrasion), '<span dir="ltr">&lt; 23 mm</span>']]) + '</div></div>';
   }
 
   /* ---------- Slides ---------- */
@@ -138,15 +143,14 @@
         ];
         if (p[11]) { rows.splice(1, 0, [t(U.parts), '<span dir="ltr">' + num(p[11]) + '</span>']); }
         return '<div class="pv">' +
-          '<div class="pv-info">' + head(t(TEXT.pavesTitle) + ' · ' + pad(i + 1) + '/' + D.PAVES.length, p[1],
-            '<p class="pv-format" dir="ltr">' + num(p[3]) + '</p><p class="badge-line">' + (p[10] ? '<span class="badge eco">ECOLINE</span>' : '') + '<span class="badge">' + t(U.antistain) + '</span></p>') +
-            '<h3 class="mono">' + t(U.specs) + '</h3>' + dl(rows) +
+          '<div class="pv-head">' + head(t(TEXT.pavesTitle) + ' · ' + pad(i + 1) + '/' + D.PAVES.length, p[1],
+            '<p class="pv-format" dir="ltr">' + num(p[3]) + '</p><p class="badge-line">' + (p[10] ? '<span class="badge eco">ECOLINE</span>' : '') + '<span class="badge">' + t(U.antistain) + '</span></p>') + '</div>' +
+          '<figure class="render pv-render">' + img(p[0] + '-render', p[1]) + '</figure>' +
+          '<div class="pv-details"><h3 class="mono">' + t(U.specs) + '</h3>' + dl(rows) +
             '<h3 class="mono">' + t(U.use) + '</h3>' + usage(p[9]) + quote(p[1]) + '</div>' +
-          '<div class="pv-media">' +
-            '<figure class="render">' + img(p[0] + '-render', p[1]) + '</figure>' +
-            '<div class="pv-photos"><figure>' + img(p[0] + '-photo', p[1]) + '</figure><figure>' + img(p[0] + '-close', p[1]) + '</figure></div>' +
-            '<figure class="calp">' + img(p[0] + '-calp', t(U.pattern) + ' — ' + p[1]) + '<figcaption class="mono">' + t(U.pattern) + '</figcaption></figure>' +
-          '</div></div>' +
+          '<div class="pv-photos"><figure>' + img(p[0] + '-photo', p[1]) + '</figure><figure>' + img(p[0] + '-close', p[1]) + '</figure></div>' +
+          '<figure class="calp">' + img(p[0] + '-calp', t(U.pattern) + ' — ' + p[1]) + '<figcaption class="mono">' + t(U.pattern) + '</figcaption></figure>' +
+          '</div>' +
           '<div class="pv-foot">' + coloursBlock() + tolerances() + '</div>';
       } });
     });
@@ -285,8 +289,13 @@
       var cells = [r[0], r[2], r[3], r[4]].concat(withRounded ? [r[11]] : []).concat([r[5], r[6] + ' kg', r[7], r[8] + ' kg', num(r[9]), num(r[10])]);
       return '<tr>' + cells.map(function (c, i) { return i === 0 ? '<th scope="row">' + c + '</th>' : '<td dir="auto">' + c + '</td>'; }).join('') + '</tr>';
     }).join('');
+    var cards = rows.map(function (r) {
+      var cells = [r[2], r[3], r[4]].concat(withRounded ? [r[11]] : []).concat([r[5], r[6] + ' kg', r[7], r[8] + ' kg', num(r[9]) + ' MPa', num(r[10]) + ' MPa']);
+      return '<article class="kerb-card"><h3>' + r[0] + '</h3>' + dl(cells.map(function (c, i) { return [h[i + 1], c]; })) + '</article>';
+    }).join('');
     return '<div class="table-scroll"><table class="kerb-table"><caption class="mono">' + t(U.resist) + ' — B1 · B2' + (colour ? ' · ' + t(U.colour) + ' : ' + colour : '') + '</caption><thead><tr>' +
-      h.map(function (x) { return '<th scope="col">' + x + '</th>'; }).join('') + '</tr></thead><tbody>' + body + '</tbody></table></div>';
+      h.map(function (x) { return '<th scope="col">' + x + '</th>'; }).join('') + '</tr></thead><tbody>' + body + '</tbody></table></div>' +
+      '<div class="kerb-cards">' + (colour ? '<p class="mono note">' + t(U.colour) + ' : ' + colour + '</p>' : '') + cards + '</div>';
   }
 
   /* ---------- Build DOM ---------- */
@@ -304,27 +313,28 @@
     countT.textContent = String(SLIDES.length);
 
     var chs = Object.keys(UI.chapters);
-    chaptersEl.innerHTML = chs.map(function (c) {
-      return '<button type="button" class="chip mono" data-ch="' + c + '">' + t(UI.chapters[c]) + '</button>';
-    }).join('');
-    chaptersEl.querySelectorAll('[data-ch]').forEach(function (b) {
-      b.addEventListener('click', function () {
-        var c = b.getAttribute('data-ch');
-        for (var i = 0; i < SLIDES.length; i++) { if (SLIDES[i].ch === c) { go(i, true); break; } }
-      });
-    });
-
-    jump.innerHTML = '<option value="">' + t(UI.goto) + '</option>' + chs.map(function (c) {
-      return '<optgroup label="' + esc(t(UI.chapters[c])) + '">' + SLIDES.map(function (s, i) {
-        return s.ch === c ? '<option value="' + i + '">' + (i + 1) + ' · ' + esc(t(s.title)) + '</option>' : '';
-      }).join('') + '</optgroup>';
+    tocList.innerHTML = chs.map(function (c) {
+      return '<section><h3 class="mono">' + t(UI.chapters[c]) + '</h3><ol>' + SLIDES.map(function (sl, i) {
+        return sl.ch === c ? '<li><button type="button" data-i="' + i + '"><span class="n" dir="ltr">' + pad(i + 1) + '</span><span>' + esc(t(sl.title)) + '</span></button></li>' : '';
+      }).join('') + '</ol></section>';
     }).join('');
     status();
     watchHeight();
   }
-  jump.addEventListener('change', function () {
-    if (jump.value !== '') { go(parseInt(jump.value, 10), true); }
-    jump.value = '';
+  /* Contents: a plain list of every page, grouped by chapter */
+  function openToc() {
+    if (toc.showModal) { toc.showModal(); } else { toc.setAttribute('open', ''); }
+    var cur = tocList.querySelector('[aria-current="page"]');
+    if (cur) { cur.scrollIntoView({ block: 'center' }); }
+  }
+  function closeToc() { if (toc.close) { toc.close(); } else { toc.removeAttribute('open'); } }
+  openBtn.addEventListener('click', openToc);
+  tocBtn.addEventListener('click', openToc);
+  doc.getElementById('cat-toc-close').addEventListener('click', closeToc);
+  toc.addEventListener('click', function (e) {
+    if (e.target === toc) { closeToc(); return; }
+    var b = e.target.closest('[data-i]');
+    if (b) { closeToc(); go(parseInt(b.getAttribute('data-i'), 10), false); }
   });
 
   /* ---------- Position ---------- */
@@ -359,7 +369,9 @@
     nowEl.textContent = t(UI.chapters[s.ch]) + ' — ' + t(s.title);
     prev.disabled = index === 0;
     next.disabled = index === SLIDES.length - 1;
-    chaptersEl.querySelectorAll('[data-ch]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-ch') === s.ch)); });
+    tocList.querySelectorAll('[data-i]').forEach(function (b) {
+      if (b.getAttribute('data-i') === String(index)) { b.setAttribute('aria-current', 'page'); } else { b.removeAttribute('aria-current'); }
+    });
   }
 
   /* The strip is as tall as the current page, so short pages don't leave a gap */
@@ -387,7 +399,7 @@
   next.addEventListener('click', function () { go(index + 1); });
   doc.addEventListener('keydown', function (e) {
     var tg = e.target;
-    if (tg && tg.closest && tg.closest('input, textarea, select')) { return; }
+    if ((tg && tg.closest && tg.closest('input, textarea, select')) || toc.open) { return; }
     if (e.key === 'ArrowRight') { e.preventDefault(); go(index + (rtl() ? -1 : 1)); }
     else if (e.key === 'ArrowLeft') { e.preventDefault(); go(index + (rtl() ? 1 : -1)); }
   });

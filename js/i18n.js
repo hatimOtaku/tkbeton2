@@ -81,7 +81,9 @@ window.TK_I18N = {
     "cat.cta.title": "Un modèle vous intéresse ?",
     "cat.cta.p": "Indiquez le nom du modèle et la surface dans votre demande de devis.",
     "cat.cta.btn": "Demander un devis",
-    "cat.hint": "Glissez ou utilisez les flèches pour passer d’une page à l’autre"
+    "cat.hint": "Glissez ou utilisez les flèches pour passer d’une page à l’autre",
+    "cat.toc": "Sommaire",
+    "cat.close": "Fermer"
   },
   "en": {
     "meta.title": "TK Béton — Concrete pavers, kerbs, channels and street furniture",
@@ -163,7 +165,9 @@ window.TK_I18N = {
     "cat.cta.title": "Interested in a model?",
     "cat.cta.p": "Mention the model name and the area in your quote request.",
     "cat.cta.btn": "Request a quote",
-    "cat.hint": "Swipe or use the arrows to move from page to page"
+    "cat.hint": "Swipe or use the arrows to move from page to page",
+    "cat.toc": "Contents",
+    "cat.close": "Close"
   },
   "ar": {
     "meta.title": "تي كي بيتون — بلاطات وأرصفة وقنوات تصريف وأثاث حضري من الخرسانة",
@@ -245,6 +249,8 @@ window.TK_I18N = {
     "cat.cta.title": "هل يهمّكم نموذج ما؟",
     "cat.cta.p": "اذكروا اسم النموذج والمساحة في طلب عرض السعر.",
     "cat.cta.btn": "اطلب عرض سعر",
-    "cat.hint": "اسحبوا أو استعملوا الأسهم للانتقال بين الصفحات"
+    "cat.hint": "اسحبوا أو استعملوا الأسهم للانتقال بين الصفحات",
+    "cat.toc": "الفهرس",
+    "cat.close": "إغلاق"
   }
 };

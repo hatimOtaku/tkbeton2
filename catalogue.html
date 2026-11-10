@@ -59,24 +59,30 @@ var d=document.documentElement;d.lang=l;d.dir=l==='ar'?'rtl':'ltr';}catch(e){}})
         <button class="cat-nav prev" type="button" id="cat-prev" aria-label="Page précédente">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4 7 12l8 8"/></svg>
         </button>
-        <div class="cat-status">
-          <p class="cat-count" aria-live="polite" dir="ltr"><b id="cat-n">1</b> / <span id="cat-total">38</span></p>
-          <div class="cat-progress" aria-hidden="true"><span id="cat-fill"></span></div>
-          <p class="cat-now mono" id="cat-now"></p>
-        </div>
+        <button class="cat-status" type="button" id="cat-open" aria-haspopup="dialog" aria-controls="cat-toc">
+          <span class="cat-count" aria-live="polite" dir="ltr"><b id="cat-n">1</b> / <span id="cat-total">38</span></span>
+          <span class="cat-now" id="cat-now"></span>
+          <span class="cat-progress" aria-hidden="true"><span id="cat-fill"></span></span>
+        </button>
+        <button class="cat-toc-btn" type="button" id="cat-toc-btn" aria-haspopup="dialog" aria-controls="cat-toc">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg><span data-i18n="cat.toc">Sommaire</span>
+        </button>
         <button class="cat-nav next" type="button" id="cat-next" aria-label="Page suivante">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 4 8 8-8 8"/></svg>
         </button>
-      </div>
-      <div class="wrap cat-tools">
-        <nav class="cat-chapters" id="cat-chapters" aria-label="Chapitres"></nav>
-        <select class="cat-jump mono" id="cat-jump" aria-label="Sommaire"></select>
       </div>
     </div>
     <div class="cat-viewport" id="cat-viewport">
       <div class="cat-track" id="cat-track"></div>
     </div>
   </section>
+  <dialog class="cat-toc" id="cat-toc" aria-labelledby="cat-toc-title">
+    <div class="toc-head">
+      <p class="toc-title" id="cat-toc-title" data-i18n="cat.toc">Sommaire</p>
+      <button class="toc-close" type="button" id="cat-toc-close" data-i18n="cat.close">Fermer</button>
+    </div>
+    <div class="toc-list" id="cat-toc-list"></div>
+  </dialog>
   <noscript><p class="wrap noscript"><a href="catalogue/catalogue-tk-beton.pdf">catalogue-tk-beton.pdf</a></p></noscript>
 
   <section class="sec sec-ink cat-cta" aria-labelledby="cta-title">
