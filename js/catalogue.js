@@ -330,20 +330,31 @@
     status();
   }
   /* Contents: a plain list of every page, grouped by chapter */
-  function openToc() {
-    if (toc.showModal) { toc.showModal(); } else { toc.setAttribute('open', ''); }
+  var opener = null;
+  function tocOpen() { return !toc.hidden; }
+  function openToc(e) {
+    opener = e && e.currentTarget;
+    toc.hidden = false;
+    doc.documentElement.classList.add('toc-open');
+    /* show the current section in the middle of the list, without moving the page */
     var cur = tocList.querySelector('[aria-current="page"]');
-    if (cur) { cur.scrollIntoView({ block: 'center' }); }
+    if (cur) { tocList.scrollTop = cur.offsetTop - tocList.offsetTop - tocList.clientHeight / 2 + cur.offsetHeight / 2; }
+    doc.getElementById('cat-toc-close').focus();
   }
-  function closeToc() { if (toc.close) { toc.close(); } else { toc.removeAttribute('open'); } }
+  function closeToc() {
+    toc.hidden = true;
+    doc.documentElement.classList.remove('toc-open');
+    if (opener) { opener.focus({ preventScroll: true }); }
+  }
   openBtn.addEventListener('click', openToc);
   tocBtn.addEventListener('click', openToc);
   doc.getElementById('cat-toc-close').addEventListener('click', closeToc);
   toc.addEventListener('click', function (e) {
-    if (e.target === toc) { closeToc(); return; }
+    if (e.target.closest('[data-close]')) { closeToc(); return; }
     var b = e.target.closest('[data-i]');
-    if (b) { closeToc(); go(parseInt(b.getAttribute('data-i'), 10), false); }
+    if (b) { closeToc(); go(parseInt(b.getAttribute('data-i'), 10)); }
   });
+  doc.addEventListener('keydown', function (e) { if (e.key === 'Escape' && tocOpen()) { closeToc(); } });
 
   /* ---------- Position: the whole catalogue is one long page; the bar follows the section on screen ---------- */
   function headerH() { var h = doc.querySelector('.site-header'); return h ? h.offsetHeight : 0; }
@@ -352,7 +363,7 @@
     var bar = doc.querySelector('.cat-bar');
     return headerH() + (bar && getComputedStyle(bar).position === 'sticky' ? bar.offsetHeight : 0);
   }
-  var target = -1;
+  var target = -1, settleRun = 0;
   function targetY(i) { return Math.max(0, slides[i].getBoundingClientRect().top + window.scrollY - topCover() + 1); }
   /* jump without animation, even though the site turns on smooth scrolling for the whole page */
   function jumpTo(y) {
@@ -361,29 +372,23 @@
     window.scrollTo(0, y);
     root.style.scrollBehavior = '';
   }
-  function go(i, smooth) {
+  function go(i) {
     if (i < 0 || i >= SLIDES.length) { return; }
     target = i;
     anchor = i;
     setIndex(i);
-    var y = targetY(i);
-    /* only a short hop animates; long jumps (contents, chapters, links) land at once */
-    if (smooth !== false && Math.abs(y - window.scrollY) < window.innerHeight * 2.5) {
-      lockUntil = Date.now() + 1500;
-      window.scrollTo({ top: y, behavior: 'smooth' });
-    } else {
-      lockUntil = Date.now() + 400;
-      jumpTo(y);
-      settle();
-    }
+    lockUntil = Date.now() + 400;
+    jumpTo(targetY(i));
+    settle();
   }
   /* if anything above moved while scrolling, finish exactly on the section asked for */
   function settle() {
     if (target < 0) { return; }
     var i = target;
     target = -1;
-    var tries = 0, still = 0;
+    var tries = 0, still = 0, my = ++settleRun;
     (function fix() {
+      if (my !== settleRun) { return; } /* a newer jump took over */
       if (Math.abs(window.scrollY - targetY(i)) > 4) { jumpTo(targetY(i)); still = 0; } else { still++; }
       if (still < 3 && ++tries < 15) { setTimeout(fix, 70); }
       else { lockUntil = 0; spy(); }
@@ -438,7 +443,7 @@
   next.addEventListener('click', function () { go(index + 1); });
   doc.addEventListener('keydown', function (e) {
     var tg = e.target;
-    if ((tg && tg.closest && tg.closest('input, textarea, select')) || toc.open) { return; }
+    if ((tg && tg.closest && tg.closest('input, textarea, select')) || tocOpen()) { return; }
     if (e.key === 'ArrowRight') { e.preventDefault(); go(index + (rtl() ? -1 : 1)); }
     else if (e.key === 'ArrowLeft') { e.preventDefault(); go(index + (rtl() ? 1 : -1)); }
   });
